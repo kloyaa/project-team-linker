@@ -5,13 +5,27 @@
 
 <h1>GitHub quick cheatsheet</h1>
 
-<pre>
-    <h1>Add remote </h1>
-    $ git remote add origin https://github.com/user/repo.git
-    # Set a new remote
+<h3>Adding a remote </h3>
+    <pre> 
+        # Set a new remote
+            $ git remote add origin https://github.com/user/repo.git
+                > remote will be added ass "origin"
 
-    $ git remote -v
-    # Verify new remote
-    > origin  https://github.com/user/repo.git (fetch)
-    > origin  https://github.com/user/repo.git (push)
+        # Verify new remote
+            $ git remote -v
+                > origin  https://github.com/user/repo.git (fetch)
+                > origin  https://github.com/user/repo.git (push)
+
+        # Removing a remote
+            $ git remote rm origin
+    </pre>
+
+<h3>Commit steps</h3>
+<pre> 
+    $ git add . 
+    $ git commit -m "message" 
+    $ git push
 </pre>
+
+
+
