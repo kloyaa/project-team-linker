@@ -9,7 +9,7 @@
    
     # Set a new remote
         $ git remote add origin https://github.com/user/repo.git
-            > remote will be added ass "origin"
+            > remote will be added as "origin"
 
     # Verify new remote
         $ git remote -v
