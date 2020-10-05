@@ -1,0 +1,4 @@
+{ 
+    "mongoURI": "localhost:27017/LinkerDb",
+    "jwtSecret" : "b@ekdu$n"
+}
