@@ -6,7 +6,7 @@
 <h1>GitHub quick cheatsheet</h1>
 
 <h3>Adding a remote </h3>
-    <pre> 
+   
         # Set a new remote
             $ git remote add origin https://github.com/user/repo.git
                 > remote will be added ass "origin"
@@ -18,14 +18,14 @@
 
         # Removing a remote
             $ git remote rm origin
-    </pre>
+    
 
 <h3>Commit steps</h3>
-<pre> 
+
     $ git add . 
     $ git commit -m "message" 
     $ git push
-</pre>
+
 
 
 
