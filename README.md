@@ -5,7 +5,7 @@
 
 <h1>GitHub quick cheatsheet</h1>
 
-<h3>Adding a remote </h3>
+<h3>Remote</h3>
    
     # Set a new remote
         $ git remote add origin https://github.com/user/repo.git
@@ -20,8 +20,9 @@
         $ git remote rm origin
     
 
-<h3>Commit steps</h3>
+<h3>Commit</h3>
 
+    # Add, commit and push
         $ git add . 
         $ git commit -m "message" 
         $ git push
