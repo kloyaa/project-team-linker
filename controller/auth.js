@@ -7,10 +7,10 @@ const config = require('config')
 const { check, validationResult } = require('express-validator')
 
 const auth = require('./../middleware/auth')
+
 /*  @route   GET api/auth
     @desc    Auth route
     @access  Public  */
-
 router.get('/', auth, async (req, res) => {
     try {
         const user = await User.findById(req.user.id)
@@ -22,7 +22,7 @@ router.get('/', auth, async (req, res) => {
 });
 
 /*  @Route   POST api/users
-    @Desc    Authenticate user + get token
+    @Desc    POST sign in
     @Access  Public  
 */
 router.post('/', [

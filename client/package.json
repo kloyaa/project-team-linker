@@ -14,9 +14,22 @@
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
+    "source-map-explorer": "^2.5.0",
     "typescript": "^3.7.5"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+        "prettier --write"
+    ]
+  },
   "scripts": {
+    "format": "./node_modules/.bin/prettier --write src/**/*.{js,jsx,ts,tsx,json,css,scss,md}",
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

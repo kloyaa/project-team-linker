@@ -1,4 +1,4 @@
-const APP_NAME = 'LinkerDb';
+const APP_NAME = 'DevLinkertDb';
 
 const mongoose = require('mongoose')
 const config = require('config')

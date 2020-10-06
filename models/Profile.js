@@ -1,6 +1,11 @@
 const mongoose = require('mongoose')
 
 const ProfileSchema = new mongoose.Schema({
+    //This creation of profile will refer to user id
+    //ObjectId will be linked to user signed
+    //If token is invalid you cannot create profile
+    //Since profile is also depending on userId signed by JWT
+
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user'
@@ -69,16 +74,13 @@ const ProfileSchema = new mongoose.Schema({
           required: true
         },
         degree: {
-          type: String,
-          required: true
+          type: String
         },
-        fieldofstudy: {
-          type: String,
-          required: true
+        fieldOfStudy: {
+          type: String
         },
         from: {
-          type: Date,
-          required: true
+          type: Date
         },
         to: {
           type: Date
