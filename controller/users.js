@@ -19,7 +19,6 @@ router.post('/', checkRegistration, async (req, res) => {
             errors: errors.array()
         })
     }
-
     try {
         const { name, email, password } = req.body;
 

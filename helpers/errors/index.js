@@ -21,6 +21,7 @@ module.exports.checkStatusAndSkills = [
         .not()
         .isEmpty()
 ]
+
 module.exports.checkProfileExperience = [
     check('title', 'Title is required')
         .not()
@@ -32,6 +33,23 @@ module.exports.checkProfileExperience = [
         .not()
         .isEmpty()
 ]
+
+module.exports.checkProfileEducation = [
+    check('school', 'School is required')
+        .not()
+        .isEmpty(),
+    check('fieldOfStudy', 'Field of study is required')
+        .not()
+        .isEmpty(),
+    check('from', 'From is required')
+        .not()
+        .isEmpty(),
+    check('description', 'Description is required')
+        .not()
+        .isEmpty()
+]
+
+
 module.exports.validateErrors = function (req, res) {
    
 }

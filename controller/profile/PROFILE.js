@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const auth = require('../../middleware/auth')
+const Profile = require('../../models/Profile')
 
 //@HttpGET
 //@ROUTE        * api/profile/me
@@ -9,6 +10,7 @@ const auth = require('../../middleware/auth')
 //@ACCESS       * Private  
 router.get('/me', auth, async (req, res) => {
     try {
+        
         const profile = await Profile
             .findOne({ user: req.user.id})
             .populate('user', ['name', 'avatar']);

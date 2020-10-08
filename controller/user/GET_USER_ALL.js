@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
         const users = await User
             .find()
             .select({ name: 1, email: 1, avatar: 1, dateJoined: 1});
-
+        
         return res.json(users)
     } catch (err) {
         console.error(err.message)

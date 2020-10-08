@@ -6,7 +6,7 @@ const { validationResult } = require('express-validator')
 const auth = require('../../middleware/auth')
 
 //@HttpPOST
-//@ROUTE        * api/profile/post
+//@ROUTE        * api/profile/new
 //@DESCRIPTION  * profile
 //@ACCESS       * Private  
 router.post('/', [auth, checkStatusAndSkills ], async (req, res) => {

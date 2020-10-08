@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 
 const ProfileSchema = new mongoose.Schema({
+  
     //This creation of profile will refer to user id
     //ObjectId will be linked to user signed
     //If token is invalid you cannot create profile
