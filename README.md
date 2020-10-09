@@ -1,4 +1,5 @@
-<h1>Linker</h1>
+<h1>Deviance</h1>
+<h4>Developer Alliance</h4>
 <p>Connect and collaborate with developers around the world</p>
 
 <br><br>
