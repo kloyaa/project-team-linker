@@ -1,0 +1,30 @@
+{
+    "workbench.iconTheme": "material-icon-theme",
+    "window.zoomLevel": 1,
+    "emmet.includeLanguages": {
+        "javascript": "javascriptreact"
+    },
+    "editor.fontSize": 15,
+    "editor.accessibilityPageSize": 15,
+    "explorer.confirmDragAndDrop": false,
+    "editor.renameOnType": true,
+    "explorer.confirmDelete": false,
+    "git.autofetch": false,
+    "workbench.sideBar.location": "left",
+    "editor.fontLigatures": null,
+    "editor.minimap.maxColumn": 300,
+    "autoimport.filesToScan": "**/*.{ts,tsx, css, js, svg, png, jpg}",
+    "autoimport.showNotifications": true,
+    "path-intellisense.autoSlashAfterDirectory": true,
+    "workbench.colorTheme": "Material Theme",
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "editor.quickSuggestionsDelay": 1,
+    "editor.quickSuggestions": null,
+    "kite.showWelcomeNotificationOnStartup": false,
+    "files.associations": {
+        "*.tsx": "typescriptreact",
+        "*.js": "javascriptreact",
+        "*.md": "html"
+    },
+    
+}
