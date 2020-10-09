@@ -49,7 +49,16 @@ module.exports.checkProfileEducation = [
         .isEmpty()
 ]
 
-
+module.exports.checkPostProps = [
+    check('text', 'Message is required')
+        .not()
+        .isEmpty()
+]
+module.exports.checkCommentProps = [
+    check('text', 'Comment is required')
+        .not()
+        .isEmpty()
+]
 module.exports.validateErrors = function (req, res) {
    
 }
