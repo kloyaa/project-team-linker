@@ -1,9 +1,9 @@
 const express = require('express')
 const router = express.Router();
 
-/*  @route   GET api/posts
-    @desc    Posts route
-    @access  Public  */
+//@ROUTE        * api/posts
+//@DESCRIPTION  * Get all posts
+//@ACCESS       * Public
 router.get('/', (req, res) => {
     res.send('POSTS ROUTE')
 })

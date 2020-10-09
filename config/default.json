@@ -1,4 +1,6 @@
 { 
     "mongoURI": "localhost:27017/LinkerDb",
-    "jwtSecret" : "b@ekdu$n"
+    "jwtSecret" : "b@ekdu$n",
+    "gitHubClientId": "a4e21bb7f827a29bf705",
+    "gitHubSecret": "f82447920fbcea4132ec8be1b4af0c6572f7e43c"
 }

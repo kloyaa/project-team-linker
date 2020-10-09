@@ -6,12 +6,12 @@ const config = require('config')
 const { validationResult } = require('express-validator')
 const { checkRegistration }  = require('../helpers/errors/index')
 const getAvatar = require('../helpers/methods/avatar')
+
 const User = require('../models/User');
 
-/*  @Route   POST api/users
-    @Desc    Register user
-    @Access  Public  
-*/
+//@ROUTE        * api/users
+//@DESCRIPTION  * Register a user
+//@ACCESS       * Public
 router.post('/', checkRegistration, async (req, res) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()) {
@@ -46,7 +46,6 @@ router.post('/', checkRegistration, async (req, res) => {
 
         // Return & save
         await user.save();
-
         const payload = {
             user: {  id: user.id }
         }

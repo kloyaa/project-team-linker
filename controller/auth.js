@@ -7,24 +7,23 @@ const config = require('config')
 const { check, validationResult } = require('express-validator')
 
 const auth = require('./../middleware/auth')
-
-/*  @route   GET api/auth
-    @desc    Auth route
-    @access  Public  */
+    
+//@ROUTE        * api/auth
+//@DESCRIPTION  * Find user by id
+//@ACCESS       * Public
 router.get('/', auth, async (req, res) => {
     try {
         const user = await User.findById(req.user.id)
-        console.log(user)
         return res.send(user)
     } catch (err) {
         console.log(err.message)
     }
 });
 
-/*  @Route   POST api/users
-    @Desc    POST sign in
-    @Access  Public  
-*/
+
+//@ROUTE        * api/users
+//@DESCRIPTION  * Sign in
+//@ACCESS       * Public
 router.post('/', [
     check('email', 'Please input a valid email')
         .isEmail(),

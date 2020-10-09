@@ -1,0 +1,49 @@
+who: who is involve?
+A: All developers around the world
+
+what: what I want to accomplish?
+A: To connect and collaborate with developers who are planning
+to create an opensource project.
+
+when: when will this happen? Estabilish a timeframe.
+A: The project will be started immediately if the development time has started
+
+which: Which requirements and constraints will be part of the process? Indentify them
+A: ???????
+
+why: Why I am setting this goal? Jot down the specific reason, purpose or benefits
+of accomplishing the goal.
+A: Finding collaborators around the world when creating an Open source project is hard and this might be the solution to collaborate and enhance your skills as an open-source contributor.
+
+How much? How many?
+A: That depends on how many people are planning to collaborate with their Open source projects
+
+How will I know when it is accomplished? 
+A: The application success will depend on how devs find this app useful
+
+Will be I able to do this?
+A: Of course, my instructor will let me use React Native or Flutter
+
+Am I prepared to make a commitment to reach my target?
+A: If I have to, then why can't I?
+
+Is there a more achievable target I am willing to work for?
+A: My knowledge in Application development, I guess.
+
+Does this seem worthwile?
+A: Why not?
+
+Is this the right time?
+A: I can't say.
+
+Does this match other efforts/needs?
+A: I can't say.
+
+What can I do today to reach my goal?
+A: Start a plan on how this project is going to Work.
+
+What can I do 3 weeks from now to reach my goal?
+A: Start the development as possible if needed.
+
+what can I do 3 months from now to reach my goal?
+A: Improve the application if started

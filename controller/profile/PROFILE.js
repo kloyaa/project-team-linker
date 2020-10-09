@@ -98,4 +98,8 @@ router.delete('/deleteaccount', auth, async (req, res) => {
     }
 })
 
+
+
+
+
 module.exports = router;
