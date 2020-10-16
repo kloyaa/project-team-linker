@@ -13,23 +13,29 @@ const User = require('../models/User');
 //@DESCRIPTION  * Register a user
 //@ACCESS       * Public
 router.post('/', checkRegistration, async (req, res) => {
-    const errors = validationResult(req);
-    if(!errors.isEmpty()) {
-        return res.status(400).json({ 
-            errors: errors.array()
-        })
-    }
     try {
+     
+        const errors = validationResult(req);
+        if(!errors.isEmpty()) {
+            /* const errorsPrototype = { ...errors }
+            if(errorsPrototype.errors[0].msg === "Password must be 6-30 characters long")
+                return res.status(400).send("Password must be 6-30 characters long")
+            if(errorsPrototype.errors[0].msg === "Password must be 6-30 characters long")
+                return res.status(400).send("Password must be 6-30 characters long")
+            */
+           return res.status(400).json({ 
+            errors: errors.array()
+         })
+        }
         const { name, email, password } = req.body;
 
         // check if user exists
         let user = await User.findOne({ email });
+    
         if(user) {
-            return res.status(400).json({ 
-                    errors: [{
-                    msg: 'User already exists'
-                }]
-            })
+            return res
+                .status(406)
+                .send("Email already exist, Try signing in.")
         }
 
         const avatar = getAvatar(email);
@@ -51,8 +57,10 @@ router.post('/', checkRegistration, async (req, res) => {
         }
 
         jwt.sign(payload, config.get("jwtSecret"), { expiresIn: 360000 }, (err, token) => {
-            if(err) res.status(400).send("Something went wrong")
-            res.json({ token, user })
+            if(err) {
+                return res.status(400).json({ msg:  "Something went wrong"})
+            }
+            return res.status(200).json({ token })
         })    
   
     } catch(err) {

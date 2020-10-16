@@ -24,7 +24,7 @@ router.get('/', auth, async (req, res) => {
 //@ROUTE        * api/users
 //@DESCRIPTION  * Sign in
 //@ACCESS       * Public
-router.post('/', [
+router.post('/login', [
     check('email', 'Please input a valid email')
         .isEmail(),
     check('password', 'Please enter a password')
@@ -40,36 +40,30 @@ router.post('/', [
     }
 
     try {
-    const { email, password } = req.body;
-    // check if user exists
-    let user = await User.findOne({ email });
-    if(!user) {
-        return res.status(400).json({ 
-                errors: [{
-                msg: 'Username and/or password is incorrect'
-            }]
-        })
-    }
+        const { email, password } = req.body;
+        // check if user exists
+        let user = await User.findOne({ email });
+        if(!user) {
+            return res
+                .status(400)
+                .send("Username and/or Password is incorrect")
+         }
 
-    const passwordIsMatch = await bcrypt.compare(password, user.password);
-    if(!passwordIsMatch) {
-            return res.status(400).json({ 
-                errors: [{
-                    msg: 'Username and/or password is incorrect'
-            }]
-        })
-    }
-    const payload = {
-        user: {
-            id: user.id
+        const passwordIsMatch = await bcrypt.compare(password, user.password);
+        if(!passwordIsMatch) {
+            return res
+                .status(400)
+                .send("Username and/or Password is incorrect")
         }
-    }
-    jwt.sign(payload, config.get("jwtSecret"), { expiresIn: 360000 }, (err, token) => {
-        if(err) res.status(400).send("Something went wrong")
-        console.log({ token, user })
-        res.json({ token, user })
-    })    
-  
+        const payload = {
+            user: { id: user.id }
+        }
+        jwt.sign(payload, config.get("jwtSecret"), { expiresIn: 360000 }, (err, token) => {
+            if(err) res.status(429).send("Signing token failed")
+            console.log({ token, user })
+            res.json({ token })
+        })    
+    
     } catch(err) {
         console.log(err.message)
         res.status(500).send("Something went wrong.")

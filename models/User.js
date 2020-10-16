@@ -26,8 +26,7 @@ let dateJoinedFormatted = `${yearNow}${monthNow}${dateNow}`
 
 const UserSchema = new mongoose.Schema({
    name: {
-    type: String,
-    required: true
+    type: String
    },
    email: {
        type: String,

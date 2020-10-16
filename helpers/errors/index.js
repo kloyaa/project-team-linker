@@ -2,12 +2,9 @@ const { check, validationResult } = require('express-validator')
 
 
 module.exports.checkRegistration = [
-    check('name', 'Name is required')
-        .not()
-        .isEmpty(),
     check('email', 'Please input a valid email')
         .isEmail(),
-    check('password', 'Please enter a password')
+    check('password', 'Password must be 6-30 characters long')
         .isLength({ 
             min: 6,
             max: 30
