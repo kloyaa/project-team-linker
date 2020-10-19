@@ -1,21 +1,21 @@
 import * as actionType from '../types';
 
-type IActionType =  {
-    type: typeof actionType.REGISTER_SUCCESS 
-        | typeof actionType.REGISTER_FAILED
-        | typeof actionType.STATUS
-        | typeof actionType.REGISTER_LOADING
-        | typeof actionType.USER_LOADED
-        | typeof actionType.USER_LOADING
-        | typeof actionType.USER_ERROR
-        | typeof actionType.LOGIN_SUCCESS
-        | typeof actionType.LOGIN_FAILED 
-        | typeof actionType.LOGOUT
-        | typeof actionType.LOADING
-        | typeof actionType.CLEAR_PROFILE,
+type IActionType = {
+    type: typeof actionType.REGISTER_SUCCESS
+    | typeof actionType.REGISTER_FAILED
+    | typeof actionType.STATUS
+    | typeof actionType.REGISTER_LOADING
+    | typeof actionType.USER_LOADED
+    | typeof actionType.USER_LOADING
+    | typeof actionType.USER_ERROR
+    | typeof actionType.LOGIN_SUCCESS
+    | typeof actionType.LOGIN_FAILED
+    | typeof actionType.LOGOUT
+    | typeof actionType.LOADING
+    | typeof actionType.CLEAR_PROFILE,
     payload: any,
     httpStatus?: number
-} 
+}
 
 const initialState = {
     token: localStorage.getItem('token'),
@@ -26,8 +26,8 @@ const initialState = {
 const authReducer = (state = initialState, action: IActionType) => {
     const { type, payload, httpStatus } = action;
 
-    switch(type) {
-        case actionType.LOGIN_SUCCESS: 
+    switch (type) {
+        case actionType.LOGIN_SUCCESS:
             localStorage.setItem('token', payload.token)
             return {
                 ...state,
@@ -43,9 +43,11 @@ const authReducer = (state = initialState, action: IActionType) => {
                 token: null,
                 user: null,
                 isAuthenticated: false,
-                loading: false
+                loading: false,
+                httpStatus: payload.httpStatus,
+                message: payload.message
             }
-        case actionType.USER_LOADED: 
+        case actionType.USER_LOADED:
             return {
                 ...state,
                 isAuthenticated: true,
@@ -69,7 +71,7 @@ const authReducer = (state = initialState, action: IActionType) => {
                 isAuthenticated: false,
                 loading: false
             }
-        case actionType.USER_LOADING: 
+        case actionType.USER_LOADING:
             return {
                 ...state,
                 loading: true
@@ -89,9 +91,9 @@ const authReducer = (state = initialState, action: IActionType) => {
                 message: payload,
                 loading: false,
                 httpStatus
-        }
+            }
 
-        case actionType.LOGOUT: 
+        case actionType.LOGOUT:
             localStorage.removeItem('token')
             return {
                 ...state,
@@ -102,7 +104,7 @@ const authReducer = (state = initialState, action: IActionType) => {
                 message: null
             }
 
-        case actionType.LOADING: 
+        case actionType.LOADING:
             return {
                 ...state,
                 loading: true

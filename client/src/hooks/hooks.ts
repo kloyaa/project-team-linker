@@ -1,7 +1,11 @@
 import { TypedUseSelectorHook, useSelector } from 'react-redux'
 import { store } from '../redux/index'
 
-type RootState = { isOn: boolean, authentication: any }
+type RootState = {
+    isOn: boolean,
+    authentication: any,
+    profile: any
+}
 
 //@Types-useSelector
 export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;

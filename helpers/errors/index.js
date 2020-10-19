@@ -5,7 +5,7 @@ module.exports.checkRegistration = [
     check('email', 'Please input a valid email')
         .isEmail(),
     check('password', 'Password must be 6-30 characters long')
-        .isLength({ 
+        .isLength({
             min: 6,
             max: 30
         })
@@ -18,7 +18,14 @@ module.exports.checkStatusAndSkills = [
         .not()
         .isEmpty()
 ]
-
+module.exports.checkFullName = [
+    check('firstName', 'First name is required')
+        .not()
+        .isEmpty(),
+    check('lastName', 'Last name is required')
+        .not()
+        .isEmpty()
+]
 module.exports.checkProfileExperience = [
     check('title', 'Title is required')
         .not()
@@ -57,5 +64,5 @@ module.exports.checkCommentProps = [
         .isEmpty()
 ]
 module.exports.validateErrors = function (req, res) {
-   
+
 }

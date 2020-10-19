@@ -1,13 +1,13 @@
 import React, { Fragment } from 'react'
-import Navbar from './Navbar/Navbar'
+import Navbar from './NavbarTop/Navbar/Navbar'
 
-type INavbarTop = { }
+type INavbarTop = {}
 const NavbarTop: React.FC<INavbarTop> = () => {
-    return ( 
+    return (
         <Fragment>
             <Navbar />
         </Fragment>
-     );
+    );
 }
- 
+
 export default NavbarTop;

@@ -10,18 +10,18 @@ const Profile = require('../../models/Profile')
 //@ACCESS       * Private  
 router.get('/me', auth, async (req, res) => {
     try {
-        
+
         const profile = await Profile
-            .findOne({ user: req.user.id})
+            .findOne({ user: req.user.id })
             .populate('user', ['name', 'avatar']);
 
-            if(!profile) {
-                return res
-                    .status(400)
-                    .json({ msg: 'Profile does not exist' })
-            }
+        // if (!profile) {
+        //     return res
+        //         .status(400)
+        //         .json({ msg: 'Profile does not exist' })
+        // }
 
-            res.status(200).json(profile)
+        res.status(200).json(profile)
     } catch (err) {
         console.error(err.message)
         res.status(500).send("Something went wrong")
@@ -55,17 +55,17 @@ router.get('/:id', async (req, res) => {
     try {
         const profile = await Profile
             .findOne({ user: req.params.id })
-            .populate('user', [ 'name', 'avatar'])
+            .populate('user', ['name', 'avatar'])
 
-            if(!profile) {
-                return res.status(400).json({ msg: "Profile not found"})
-            }
+        // if(!profile) {
+        //     return res.status(400).json({ msg: "Profile not found"})
+        // }
 
         res.json(profile)
     } catch (err) {
         console.log(err.message)
-        if(err.kind == 'ObjectId')
-        res.status(500).send("Profile not found")
+        if (err.kind == 'ObjectId')
+            res.status(500).send("Profile not found")
     }
 })
 
@@ -80,12 +80,12 @@ router.delete('/deleteaccount', auth, async (req, res) => {
         await Profile.findOneAndRemove({ user: req.user.id })
         await User.findOneAndRemove({ _id: req.user.id })
 
-        res.json({ 
+        res.json({
             msg: 'Account deleted successfully'
         })
 
-        if(!profile) {
-            return res.status(400).json({ 
+        if (!profile) {
+            return res.status(400).json({
                 msg: "Profile not found"
             })
         }
@@ -93,8 +93,8 @@ router.delete('/deleteaccount', auth, async (req, res) => {
         return res.json(profile)
     } catch (err) {
         console.log(err.message)
-        if(err.kind == 'ObjectId')
-        res.status(500).send("Profile not found")
+        if (err.kind == 'ObjectId')
+            res.status(500).send("Profile not found")
     }
 })
 

@@ -1,25 +1,31 @@
 :root {
-    --dark:#4f6467;
+    --dark: #4f6467;
     --white: #fff;
     --white-fade-1: #eaeaea;
 }
+
 .dark {
     background: var(--dark) !important;
     color: #fff !important;
 }
+
 .white-f-1 {
     background: var(--white-fade-1) !important;
     color: #111 !important;
 }
-.text-white { 
+
+.text-white {
     color: var(--white) !important;
 }
-.text-dark { 
+
+.text-dark {
     color: var(--dark) !important;
 }
+
 .b {
     font-weight: bold;
 }
+
 .fw-500 {
     font-weight: 500;
 }
@@ -28,27 +34,70 @@
     font-weight: 400;
 }
 
+.opc-5 {
+    opacity: 0.5;
+}
+
+.opc-6 {
+    opacity: 0.6;
+}
+
+.opc-7 {
+    opacity: 0.7;
+}
+
+.opc-8 {
+    opacity: 0.8;
+}
+
+.opc-9 {
+    opacity: 0.9;
+}
+
+.fs-9 {
+    font-size: 9px;
+}
+
+.fs-10 {
+    font-size: 10px;
+}
+
+.fs-11 {
+    font-size: 11px;
+}
+
+.fs-12 {
+    font-size: 12px;
+}
+
 .fs-13 {
     font-size: 13px;
 }
+
 .fs-14 {
     font-size: 14px;
 }
+
 .fs-15 {
     font-size: 15px;
 }
+
 .fs-16 {
     font-size: 16px;
 }
+
 .fs-17 {
     font-size: 17px;
 }
+
 .fs-18 {
     font-size: 18px;
 }
+
 .fs-19 {
     font-size: 19px;
 }
+
 .fs-20 {
     font-size: 20px;
 }

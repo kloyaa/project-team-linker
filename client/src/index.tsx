@@ -3,11 +3,12 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import { BrowserRouter as Router } from 'react-router-dom'
 import { Provider } from 'react-redux';
-import {store} from './redux/index';
+import { store } from './redux/index';
 import './assets/css/root.css'
 import './assets/css/index.css'
 import * as serviceWorker from "./serviceWorker";
 //store.subscribe(() => console.log(store.getState()));
+
 
 ReactDOM.render(
   <React.StrictMode>

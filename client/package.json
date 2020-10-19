@@ -27,6 +27,7 @@
     "redux-thunk": "^2.3.0",
     "source-map-explorer": "^2.5.0",
     "typescript": "^3.9.7",
+    "url-regex": "^5.0.0",
     "uuid": "^8.3.1"
   },
   "husky": {

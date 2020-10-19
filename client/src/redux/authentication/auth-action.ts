@@ -5,25 +5,42 @@ import { Dispatch } from 'react';
 import { IActionType, ILoginUser, INewUser } from '../ts/action-types';
 import { config } from '../ts/config';
 
-export const loadUser: any = () =>  {
-    return async (dispatch: Dispatch<IActionType>)  =>  {
+export const loadUser: any = () => {
+    return async (dispatch: Dispatch<IActionType>) => {
         //If there is any token in localstorage.token
-        if(localStorage.token) {
+        if (localStorage.token) {
             setAuthToken(localStorage.token)
         }
         try {
             dispatch({ type: actionType.LOADING })
-            console.log('[loadUser]')
-            await axios.get('/api/auth')
+            console.log('[loadUser] is triggered')
+
+
+            /*  # /api/auth 
+                # Requires x-auth-token
+                # x-auth-token = true dispatch loadUserData(), loadUserProfile()
+                # !localstorage.token is empty simply"return" to stop  request execution */
+
+            if (!localStorage.token) return
+            const loadUserData = () => axios.get('/api/auth');
+            const loadUserProfile = () => axios.get('/api/profile/me');
+            await Promise.all([loadUserData(), loadUserProfile()])
                 .then(res => {
                     dispatch({
                         type: actionType.USER_LOADED,
-                        payload: res.data
+                        payload: res[0].data
+                    })
+                    dispatch({
+                        type: actionType.GET_PROFILE,
+                        payload: res[1].data
                     })
                 })
-                .catch(err => dispatch({ type: actionType.USER_ERROR }) )
+                .catch(err => {
+                    dispatch({ type: actionType.USER_ERROR })
+                })
+
         } catch (error) {
-            throw new Error("Something went wrong while loading your credentials")
+            throw new Error("Please try again later")
         }
     }
 }
@@ -47,7 +64,7 @@ export const registerUser: any = ({ name, email, password }: INewUser) => {
                     console.log(`[POST_SUCCESS]`, res.data)
                 })
                 .catch(err => {
-                    if(err.response.status === 406) {
+                    if (err.response.status === 406) {
                         dispatch({ type: actionType.REGISTER_FAILED })
                         dispatch({
                             type: actionType.STATUS,
@@ -55,6 +72,8 @@ export const registerUser: any = ({ name, email, password }: INewUser) => {
                             httpStatus: 406
                         })
                     }
+
+
                 })
         } catch (error) {
             throw new Error("Registration request failed")
@@ -64,9 +83,9 @@ export const registerUser: any = ({ name, email, password }: INewUser) => {
 export const loginUser: any = ({ email, password }: ILoginUser) => {
     return async (dispatch: Dispatch<IActionType>) => {
         try {
-            console.log('[loginUser]')
+            console.log('[loginUser] is triggered')
             dispatch({ type: actionType.LOADING })
-           
+
             const payload = { email, password }
 
             await axios.post('/api/auth/login', payload, config)
@@ -82,12 +101,15 @@ export const loginUser: any = ({ email, password }: ILoginUser) => {
                     dispatch(loadUser())
                 })
                 .catch(err => {
-                    if(err.response.status === 400) {
-                        dispatch({ type: actionType.LOGIN_FAILED })
+                    if (err.response.status === 400) {
                         dispatch({
-                            type: actionType.STATUS,
-                            payload: "Account not found or Invalid credentials"
+                            type: actionType.LOGIN_FAILED,
+                            payload: {
+                                httpStatus: err.response.status,
+                                message: err.response.data
+                            }
                         })
+
                     }
                 })
         } catch (error) {
@@ -95,9 +117,9 @@ export const loginUser: any = ({ email, password }: ILoginUser) => {
         }
     }
 }
-export const logoutUser:any = () => {
+export const logoutUser: any = () => {
     return (dispatch: Dispatch<IActionType>) => {
-        console.log('[logoutUser]')
+        console.log('[logoutUser] is triggered')
         dispatch({ type: actionType.LOADING })
         dispatch({ type: actionType.LOGOUT })
         dispatch({ type: actionType.CLEAR_PROFILE })
