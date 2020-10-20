@@ -1,5 +1,5 @@
-import React, { lazy } from 'react'
-import { Redirect, Switch, Route, useRouteMatch } from 'react-router-dom'
+import React, { lazy, useEffect } from 'react'
+import { Switch, Route, useRouteMatch, useHistory } from 'react-router-dom'
 import { useTypedSelector } from '../../hooks/hooks'
 import SpinnerLarge from '../../components/Spinner/Spinner';
 import NavbarMini from '../../components/Navbar/NavbarMini/NavbarMini';
@@ -7,28 +7,28 @@ import NavbarMini from '../../components/Navbar/NavbarMini/NavbarMini';
 const Posts = lazy(() => import('./Posts/Posts'));
 
 const Feed: React.FC<any> = () => {
-    let { path } = useRouteMatch();
-    const profileState = useTypedSelector(state => state.profile);
-    const { profile, loading } = profileState;
+    const history = useHistory();
+    const { path } = useRouteMatch();
 
-    if (loading) {
-        return <SpinnerLarge />
-    }
-    if ((profile === null) && (!loading)) {
-        return <Redirect to="/profile/edit" />
-    }
+    const profileState = useTypedSelector(state => state.profile);
+    const { loading, profile } = profileState;
+
+    // useEffect(() => {
+    //     if (!profile && !loading)
+    //         history.push('/profile/edit');
+    // }, [profile, loading, history]);
+
+    if (loading) return <SpinnerLarge />;
+
     return (
         <div className="container">
-            <div className="row justify-content-center p-5">
+            <div className="row justify-content-center pt-5">
                 <div className="col-md-7">
                     <NavbarMini />
                 </div>
             </div>
-            <div className="row">
-                <div className="col-md-4">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos officia quisquam commodi molestias labore assumenda, amet ea pariatur aspernatur accusamus!
-                </div>
-                <div className="col-md">
+            <div className="row justify-content-center">
+                <div className="col-md-7">
                     <Switch>
                         <Route exact path={`${path}`} component={Home} />
                         <Route path={`${path}/posts`} component={Posts} />

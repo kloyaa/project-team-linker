@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Redirect, useHistory } from 'react-router-dom';
 import { ButtonSaveAndContinue } from '../../../components/Button/Button';
@@ -11,13 +11,23 @@ import { editProfile } from '../../../redux/profile/profile-action';
 function Profile() {
     const history = useHistory();
     const dispatch: AppDispatch = useDispatch();
-    const { errors, register, handleSubmit } = useForm();
     const authenticationState = useTypedSelector(state => state.authentication);
-    const { user, isAuthenticated } = authenticationState;
 
-    if (!isAuthenticated) {
-        return <Redirect to="/login" />
-    }
+    const { user, isAuthenticated } = authenticationState;
+    const { errors, register, handleSubmit } = useForm();
+    const [proceed, setProceed] = useState({
+        willProceed: false
+    })
+
+    useEffect(() => {
+        console.log('[history]', history)
+        if (!isAuthenticated)
+            history.push('/login');
+
+    }, [isAuthenticated, history,]);
+
+    if (proceed.willProceed)
+        return <Redirect to="/feed/posts" />
 
     const onSave = (data: any) => {
         const { firstName, lastName, gitHub } = data;
@@ -26,8 +36,10 @@ function Profile() {
             lastName,
             gitHub
         }))
-        history.push('/feed')
+        setProceed({ willProceed: true })
     }
+
+
     return (
         <Fragment>
             <form onSubmit={handleSubmit(onSave)}>
@@ -82,10 +94,6 @@ function Profile() {
                     </div>
                 </div>
 
-                {/* 
-                    https://www.github.com/koolamadridano 
-                    www.github.com/koolamadridano 
-                */}
 
                 <DividerTitleSocial />
                 {/* Fields social*/}

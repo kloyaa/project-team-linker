@@ -9,7 +9,6 @@ import './assets/css/index.css'
 import * as serviceWorker from "./serviceWorker";
 //store.subscribe(() => console.log(store.getState()));
 
-
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

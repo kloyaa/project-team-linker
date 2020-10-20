@@ -1,19 +1,12 @@
 import React, { Fragment } from 'react'
-import { Link, Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
-import { AppDispatch, useTypedSelector } from '../../hooks/hooks';
+import { AppDispatch } from '../../hooks/hooks';
 import { logoutUser } from '../../redux/authentication/auth-action';
-import Profile from './Profile/Profile'
+import Profile from './EditProfile/Profile'
 
 const ProfileComponent: React.FC<any> = () => {
     const dispatch: AppDispatch = useDispatch();
-    const authentication = useTypedSelector(state => state.authentication);
-    const { isAuthenticated } = authentication;
-
-    if (!isAuthenticated) {
-        return <Redirect to="/login" />
-    }
-
     return (
         <Fragment>
             <div className="container">

@@ -5,12 +5,11 @@ import { store } from "./redux";
 import { loadUser } from "./redux/authentication/auth-action";
 import ProtectedRoute from "./routes/ProtectedRoute";
 
-
 const LandingPage = lazy(() => import('./views/Landing/Landing'))
 const RegisitrationPage = lazy(() => import('./views/Registration/Registration'))
-const Login = lazy(() => import('./views/Login/Login'))
-const Feed = lazy(() => import('./views/Feed/Feed'))
-const ProfilePage = lazy(() => import('./views/Profile/Profile'))
+const LoginPage = lazy(() => import('./views/Login/Login'))
+const FeedPage = lazy(() => import('./views/Feed/Feed'))
+const EditProfilePage = lazy(() => import('./views/EditProfile/Profile'))
 
 if (localStorage.token) {
   setAuthToken(localStorage.token)
@@ -20,16 +19,16 @@ function App() {
   useEffect(() => {
     store.dispatch(loadUser())
   }, []);
+
   return (
     <div>
-      {/* <NavbarTop /> */}
       <Suspense fallback={<div></div>}>
         <Switch>
           <Route exact path="/" component={LandingPage} />
           <Route path="/registration" component={RegisitrationPage} />
-          <Route path="/login" component={Login} />
-          <Route path="/profile/edit" component={ProfilePage} />
-          <ProtectedRoute path="/feed" component={Feed} />
+          <Route path="/login" component={LoginPage} />
+          <Route path="/profile/edit" component={EditProfilePage} />
+          <ProtectedRoute path="/feed" component={FeedPage} />
         </Switch>
       </Suspense>
     </div>

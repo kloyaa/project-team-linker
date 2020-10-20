@@ -2,6 +2,31 @@
     --dark: #4f6467;
     --white: #fff;
     --white-fade-1: #eaeaea;
+    --danger: #ff4444;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #fff;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: var(--dark);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.danger {
+    background: var(--danger) !important;
 }
 
 .dark {

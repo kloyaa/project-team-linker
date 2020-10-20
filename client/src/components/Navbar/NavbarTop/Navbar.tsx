@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react'
-import Navbar from './NavbarTop/Navbar/Navbar'
+import Navbar from './Navbar/Navbar'
+
 
 type INavbarTop = {}
 const NavbarTop: React.FC<INavbarTop> = () => {

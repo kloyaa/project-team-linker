@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom'
+import { useTypedSelector } from '../../hooks/hooks';
 type IButtonContinue = {}
 type IButtonSignIn = {
     classes?: string,
@@ -7,12 +8,17 @@ type IButtonSignIn = {
 }
 
 export const ButtonContinue: React.FC<IButtonContinue> = () => {
+    const authentication = useTypedSelector(state => state.authentication);
+    const { loading } = authentication;
     return (
         <Fragment>
             <button className="uk-button uk-button-primary mt-2">
                 <div className="d-flex align-items-center">
                     <span>Continue</span>
-                    <span uk-icon="icon: chevron-right"></span>
+                    {loading
+                        ? <i className="fas fa-spinner fa-spin ml-1"></i>
+                        : <span uk-icon="icon: chevron-right"></span>
+                    }
                 </div>
             </button>
         </Fragment>
@@ -36,12 +42,17 @@ export const ButtonSignIn: React.FC<IButtonSignIn> = ({ classes, textColor }) =>
     );
 }
 export const ButtonLogIn: React.FC<IButtonSignIn> = ({ classes, textColor }) => {
+    const authentication = useTypedSelector(state => state.authentication);
+    const { loading } = authentication;
     return (
         <Fragment>
             <button className={`uk-button ${classes ? classes : 'uk-button-default'} mt-2`}>
                 <div className="d-flex align-items-center">
                     <span className={`${textColor ? textColor : 'text-dark'}`}>Sign in</span>
-                    <span uk-icon="icon: sign-in" className={`${textColor ? textColor : 'text-dark'}`}></span>
+                    {loading
+                        ? <i className="fas fa-spinner fa-spin ml-1"></i>
+                        : <span uk-icon="icon: sign-in" className={`${textColor ? textColor : 'text-dark'}`}></span>
+                    }
                 </div>
             </button>
         </Fragment>

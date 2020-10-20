@@ -1,10 +1,9 @@
 import React from 'react';
-import { Route, Redirect, useHistory } from 'react-router-dom'
+import { Redirect, Route } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { IProtectedRoute } from '../redux/ts/action-types';
 
 const ProtectedRoute: React.FC<IProtectedRoute> = ({ component: Component, ...rest }) => {
-    const history = useHistory()
     const authentication = useSelector((state: any) => state.authentication);
     const { isAuthenticated, loading } = authentication;
     return (
@@ -12,10 +11,8 @@ const ProtectedRoute: React.FC<IProtectedRoute> = ({ component: Component, ...re
             props => {
                 if (isAuthenticated && !loading && localStorage.token) {
                     return <Component {...rest} {...props} />
-                } else {
-                    if (!isAuthenticated && !loading && !localStorage.token) {
-                        history.push('/login')
-                    }
+                } else if (!isAuthenticated && !loading && !localStorage.token) {
+                    return <Redirect to="/login" />
                 }
             }
         } />

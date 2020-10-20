@@ -1,11 +1,11 @@
 import React, { Fragment, useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
 import { ButtonContinue, ButtonSignIn } from '../../../components/Button/Button';
 import { ChkBoxAgreement, ChkBoxOPT, InputEmail, InputPassword, InputPasswordConfirm } from '../../../components/Form/Form';
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { AppDispatch, useTypedSelector } from '../../../hooks/hooks';
 import { registerUser } from '../../../redux/authentication/auth-action'
+import { useHistory } from 'react-router-dom'
 
 type IRegistration = {}
 type IFieldsData = {
@@ -14,36 +14,32 @@ type IFieldsData = {
     confirmPassword: string
 }
 const Registration: React.FC<IRegistration> = () => {
-    const dispatch: AppDispatch = useDispatch();
     const history = useHistory();
-
+    const dispatch: AppDispatch = useDispatch();
     const { register, handleSubmit, errors } = useForm();
     const [password, setPasssword] = useState(false)
-    const [responseMessage, setResponseMessage] = useState("")
 
     const authentication = useTypedSelector(state => state.authentication);
-    const { isAuthenticated, message, httpStatus } = authentication;
-
-    useEffect(() => {
-        if (isAuthenticated) {
-            history.push('/feed')
-        }
-        if (httpStatus === 406) {
-            setResponseMessage(message)
-        }
-    }, [isAuthenticated, dispatch, httpStatus, history, message]);
+    const { message, httpStatus, isAuthenticated } = authentication;
 
     const onContinue = (data: IFieldsData) => {
         const { email, password, confirmPassword } = data;
+
         if (!isEqual(password, confirmPassword)) {
             setPasssword(true);
-        }
-        if (isEqual(password, confirmPassword)) {
+        } else if (isEqual(password, confirmPassword)) {
             localStorage.setItem("email", email);
-            localStorage.setItem("password", password);
-            dispatch(registerUser({ email, password }))
+            dispatch(registerUser({
+                email,
+                password
+            }))
         }
     }
+
+    useEffect(() => {
+        if (isAuthenticated)
+            history.push('/profile/edit');
+    }, [isAuthenticated, history]);
 
     return (
         <Fragment>
@@ -54,6 +50,8 @@ const Registration: React.FC<IRegistration> = () => {
 
             <form onSubmit={handleSubmit(onContinue)}>
                 <InputEmail
+                    httpStatusCode={httpStatus}
+                    httpStatusMessage={message}
                     errors={errors.email}
                     register={register({
                         required: {
@@ -90,6 +88,13 @@ const Registration: React.FC<IRegistration> = () => {
                             message: "Please confirm your password"
                         }
                     })} />
+
+                {httpStatus === 406 &&
+                    <Fragment>
+                        <div className="danger p-2 text-white mt-3">
+                            {message}
+                        </div>
+                    </Fragment>}
                 <div className="mt-3 text-left">
                     <ChkBoxAgreement
                         errors={errors.ChkBoxAgreement}
@@ -106,7 +111,7 @@ const Registration: React.FC<IRegistration> = () => {
             </form>
 
             <div className="d-flex justify-content-center text-dark mt-5">
-                <p className="fs-11" style={{ opacity: "0.7" }}>sign up with</p>
+                <p className="fs-15" style={{ opacity: "0.7" }}>sign up with</p>
             </div>
 
             <div className="d-flex justify-content-center" style={{ marginTop: "-15px" }}>

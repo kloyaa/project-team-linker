@@ -20,7 +20,7 @@ type IChkBoxAgreement = {
     errors: boolean
 }
 
-export const InputEmail: React.FC<IFieldEmail> = ({ errors, register, httpStatusCode }) => {
+export const InputEmail: React.FC<IFieldEmail> = ({ errors, register, httpStatusCode, httpStatusMessage }) => {
     const [previousEmail, setPreviousEmail] = useState({
         value: ""
     });
@@ -32,21 +32,18 @@ export const InputEmail: React.FC<IFieldEmail> = ({ errors, register, httpStatus
     const updatePreviousEmail = (e: any) => {
         setPreviousEmail({ value: e.target.value })
     }
-    const clearEmail = () => {
-        localStorage.removeItem('email')
-    }
     return (
         <Fragment>
             <div className="uk-inline mt-1">
                 <span
-                    className={`uk-form-icon  ${errors && ' text-danger'} ${httpStatusCode && ' text-danger'}`}
+                    className={`uk-form-icon  ${errors && ' text-danger'} `}
                     uk-icon="icon: mail"></span>
                 <input
                     value={previousEmail.value}
                     onChange={updatePreviousEmail}
                     name="email"
                     ref={register}
-                    className={`uk-input text-dark  ${errors && 'uk-form-danger'} ${httpStatusCode && 'uk-form-danger'}   uk-form-width-large`}
+                    className={`uk-input text-dark uk-form-width-large`}
                     type="text"
                     placeholder="Email" />
             </div>
@@ -258,13 +255,25 @@ type IEmailDisabled = {
     userEmail: string
 }
 export const InputEmailDisabled: React.FC<IEmailDisabled> = ({ userEmail }) => {
+    const [previousEmail, setPreviousEmail] = useState({
+        value: ""
+    });
+    useEffect(() => {
+        if (localStorage.email) {
+            setPreviousEmail({ value: localStorage.email })
+        }
+    }, []);
+    const updatePreviousEmail = (e: any) => {
+        setPreviousEmail({ value: e.target.value })
+    }
     return (
         <Fragment>
             <div className="uk-inline">
                 <span className="uk-form-icon" uk-icon="icon: mail"></span>
                 <input
                     uk-tooltip={`title: ${userEmail}; pos: left; animation:uk-animation-slide-right-small; duration: 300`}
-                    value={userEmail}
+                    value={previousEmail.value}
+                    onChange={updatePreviousEmail}
                     className="uk-input  uk-form-width-large"
                     type="text"
                     placeholder="Email" disabled />

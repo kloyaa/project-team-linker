@@ -1,5 +1,5 @@
-import React, { Fragment, useEffect, useState } from 'react'
-import { ButtonLogIn, ButtonRegistration } from '../../../components/Button/Button';
+import React, { Fragment, useEffect } from 'react'
+import { ButtonLogIn } from '../../../components/Button/Button';
 import { InputEmail, InputPassword } from '../../../components/Form/Form';
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
@@ -7,6 +7,8 @@ import { AppDispatch, useTypedSelector } from '../../../hooks/hooks';
 import { loginUser } from '../../../redux/authentication/auth-action';
 import { useHistory } from 'react-router-dom'
 import { Link } from 'react-router-dom'
+
+
 type ILogin = {}
 type IFieldsData = {
     email: string,
@@ -17,27 +19,23 @@ type IFieldsData = {
 const Login: React.FC<ILogin> = () => {
     const dispatch: AppDispatch = useDispatch();
     const history = useHistory();
-    const authentication = useTypedSelector(state => state.authentication)
-
-    const { message, isAuthenticated, httpStatus } = authentication;
     const { register, handleSubmit, errors } = useForm();
-    const [email, setEmail] = useState({ value: "" });
+
+    const authenticationState = useTypedSelector(state => state.authentication)
+    const { message, httpStatus, isAuthenticated } = authenticationState;
 
     const onSubmit = (data: IFieldsData) => {
         const { email, password } = data;
         dispatch(loginUser({
             email, password
         }))
-        setEmail({ value: email })
+        localStorage.setItem('email', email)
     }
-    useEffect(() => {
-        if (isAuthenticated) {
-            localStorage.setItem('email', email.value)
-            history.push('/feed')
-        }
-        console.log(`[Login.tsx: httpStatus] ${httpStatus}`)
-    }, [isAuthenticated]);
 
+    useEffect(() => {
+        if (isAuthenticated)
+            history.push('/feed/posts');
+    }, [isAuthenticated, history]);
 
     return (
         <Fragment>
@@ -75,7 +73,7 @@ const Login: React.FC<ILogin> = () => {
                     })} />
                 {httpStatus === 400 &&
                     <Fragment>
-                        <div className="bg-danger p-2 text-white mt-3">
+                        <div className="danger p-2 text-white mt-3">
                             {message}
                         </div>
                     </Fragment>}
@@ -92,7 +90,7 @@ const Login: React.FC<ILogin> = () => {
                     <ButtonLogIn classes={'uk-button-primary'} textColor={'text-white'} />
                 </div>
                 <div className="d-flex justify-content-center text-dark mt-5">
-                    <p className="fs-11" style={{ opacity: "0.7" }}>sign in with</p>
+                    <p className="fs-15" style={{ opacity: "0.7" }}>sign in with</p>
                 </div>
                 <div className="d-flex justify-content-center" style={{ marginTop: "-15px" }}>
                     <span className="uk-icon-button uk-margin-small-right" uk-icon="twitter"></span>

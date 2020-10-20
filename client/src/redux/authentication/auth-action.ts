@@ -12,7 +12,6 @@ export const loadUser: any = () => {
             setAuthToken(localStorage.token)
         }
         try {
-            dispatch({ type: actionType.LOADING })
             console.log('[loadUser] is triggered')
 
 
@@ -22,6 +21,7 @@ export const loadUser: any = () => {
                 # !localstorage.token is empty simply"return" to stop  request execution */
 
             if (!localStorage.token) return
+            dispatch({ type: actionType.LOADING })
             const loadUserData = () => axios.get('/api/auth');
             const loadUserProfile = () => axios.get('/api/profile/me');
             await Promise.all([loadUserData(), loadUserProfile()])
@@ -109,8 +109,8 @@ export const loginUser: any = ({ email, password }: ILoginUser) => {
                                 message: err.response.data
                             }
                         })
-
                     }
+                    dispatch({ type: actionType.CLEAR_PROFILE })
                 })
         } catch (error) {
             throw new Error("Account not found or Invalid credentials")
