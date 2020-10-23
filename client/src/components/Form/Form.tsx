@@ -203,7 +203,7 @@ export const InputFirstname: React.FC<IFieldFullname> = ({ register, errors }) =
                 uk-tooltip="title: First name; pos: left; animation:uk-animation-slide-right-small; duration: 300"
                 ref={register}
                 name="firstName"
-                className={`uk-input ${errors && 'uk-form-danger'} text-dark uk-form-width-large`}
+                className={`mt-2 uk-input ${errors && 'uk-form-danger'} text-dark uk-form-width-large`}
                 type="text"
                 placeholder="First name" />
             { errors && <p className="text-danger fw-400 fs-13 p-0 m-0">{errors.message}</p>}
@@ -217,7 +217,7 @@ export const InputLastname: React.FC<IFieldFullname> = ({ register, errors }) =>
                 uk-tooltip="title: Last name; pos: right; animation:uk-animation-slide-left-small; duration: 300"
                 ref={register}
                 name="lastName"
-                className={`uk-input ${errors && 'uk-form-danger'} text-dark uk-form-width-large`}
+                className={`mt-2 uk-input ${errors && 'uk-form-danger'} text-dark uk-form-width-large`}
                 type="text"
                 placeholder="Last name" />
             { errors && <p className="text-danger fw-400 fs-13 p-0 m-0  ml-1">{errors.message}</p>}

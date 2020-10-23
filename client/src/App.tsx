@@ -1,38 +1,51 @@
-import React, { lazy, Suspense, useEffect } from "react";
-import { Switch, Route } from 'react-router-dom'
-import setAuthToken from "./helpers/token/setAuthToken";
+import React, { Fragment, lazy, Suspense, useEffect } from "react";
+import { Switch, Route, useHistory } from 'react-router-dom'
 import { store } from "./redux";
 import { loadUser } from "./redux/authentication/auth-action";
-import ProtectedRoute from "./routes/ProtectedRoute";
+import { useAuthenticationState } from "./hooks/hooks";
+import setAuthToken from "./helpers/token/setAuthToken";
+import Navbar from "./components/Navbar/Navbar";
+import SpinnerLarge from "./components/Spinner/Spinner";
 
-const LandingPage = lazy(() => import('./views/Landing/Landing'))
-const RegisitrationPage = lazy(() => import('./views/Registration/Registration'))
-const LoginPage = lazy(() => import('./views/Login/Login'))
-const FeedPage = lazy(() => import('./views/Feed/Feed'))
-const EditProfilePage = lazy(() => import('./views/EditProfile/Profile'))
+const RegisitrationPage = lazy(() => import('./views/Registration/Registration'));
+const LoginPage = lazy(() => import('./views/Login/Login'));
+const PostPage = lazy(() => import('./views/Content/Posts/Posts'));
+const EditProfilePage = lazy(() => import('./views/EditProfile/Profile'));
 
+// 1. If localstorage.token is exist or active
+// 2. forward token to setAuthToken
+// 3. Load user if authenticated
 if (localStorage.token) {
-  setAuthToken(localStorage.token)
+  setAuthToken(localStorage.token);
+  store.dispatch(loadUser());
 }
+const App: React.FC<any> = () => {
+  const authentication = useAuthenticationState();
+  const history = useHistory();
 
-function App() {
   useEffect(() => {
-    store.dispatch(loadUser())
-  }, []);
+    // 1. if not authenticated and not localstorage.token 
+    // 2. return to login component
+    if (!authentication.isAuthenticated && !localStorage.token)
+      history.push('/auth/login');
+  }, [authentication.isAuthenticated, history]);
 
-  return (
-    <div>
-      <Suspense fallback={<div></div>}>
+  return <Fragment>
+    <Navbar />
+    {/* Routes starts here */}
+    <div className="container-fluid">
+      <Suspense fallback={<SpinnerLarge />}>
         <Switch>
-          <Route exact path="/" component={LandingPage} />
-          <Route path="/registration" component={RegisitrationPage} />
-          <Route path="/login" component={LoginPage} />
-          <Route path="/profile/edit" component={EditProfilePage} />
-          <ProtectedRoute path="/feed" component={FeedPage} />
+          <Route exact path="/" component={LoginPage} />
+          <Route path="/feed" component={PostPage} />
+          <Route path="/auth/registration" component={RegisitrationPage} />
+          <Route path="/auth/login" component={LoginPage} />
+          <Route path="/timeline/profile/edit" component={EditProfilePage} />
+          <Route path="/timeline/:id" component={EditProfilePage} />
         </Switch>
       </Suspense>
     </div>
-  );
+  </Fragment >
 }
-
 export default App;
+

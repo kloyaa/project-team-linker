@@ -1,13 +1,13 @@
-import  React from 'react';
+import React from 'react';
 import Registration from './Registration/Registration';
 
 type IRegistrationForm = {}
 const RegistrationForm: React.FC<IRegistrationForm> = () => (
     <div className="container">
-        <div className="row justify-content-center">
+        <div className="row justify-content-center vh-100">
             <div className="col-xl-4 col-lg-5 col-md-7 col-sm-10">
                 <section className="section__registration">
-                    <Registration />                    
+                    <Registration />
                 </section>
             </div>
         </div>

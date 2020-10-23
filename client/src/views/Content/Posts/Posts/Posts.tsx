@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react'
-import avatar1 from '../../../assets/img/avatar1.png'
+import avatar1 from '../../../../assets/img/avatar1.png'
+
 const DEFAULT_LENGTH = [
     { id: '1', name: 'Nikolai Madridano' },
     { id: '2', name: 'Dooly' },
@@ -7,14 +8,14 @@ const DEFAULT_LENGTH = [
     { id: '4', name: 'Moon Gang-tae' },
     { id: '5', name: 'Ko Moon-yeong' }
 ]
-function Posts() {
-    return (
-        <Fragment>
-            { DEFAULT_LENGTH.map((data, index) => {
-                return (
-                    <Fragment key={index}>
-                        <div uk-scrollspy="cls: uk-animation-fade; target: .card-post-container; delay: 200; repeat: false" >
-                            <div className="card-post-container p-3 uk-box-shadow-medium border mt-3" style={{ borderRadius: "5px" }}>
+const PostsComponent: React.FC<any> = () => {
+    return <Fragment>
+        {DEFAULT_LENGTH.map((data, index) => {
+            return (
+                <Fragment key={index} >
+                    <div className="bg-white">
+                        <div>
+                            <div className="border p-3 mt-3" style={{ borderRadius: "5px" }}>
                                 <div className="d-flex justify-content-between align-items-center">
                                     <div className="d-flex align-items-center">
                                         <div>
@@ -22,7 +23,7 @@ function Posts() {
                                                 src={avatar1}
                                                 alt="avatar"
                                                 className="img-fluid rounded-circle"
-                                                style={{ height: "50px" }} />
+                                                style={{ height: "50px", width: "50px" }} />
                                         </div>
                                         <div className="ml-2">
                                             <h5 className="p-0 m-0 ml-1 text-dark">{data.name}</h5>
@@ -79,11 +80,11 @@ function Posts() {
                                 </div>
                             </div>
                         </div>
-                    </Fragment>
-                )
-            })}
-        </Fragment >
-    )
+                    </div>
+                </Fragment>
+            )
+        })}
+    </Fragment>
 }
 
-export default Posts
+export default PostsComponent;

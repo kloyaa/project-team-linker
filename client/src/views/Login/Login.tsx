@@ -5,7 +5,7 @@ import Login from './Login/Login';
 type IRegistrationForm = {}
 const LoginForm: React.FC<IRegistrationForm> = () => (
     <div className="container">
-        <div className="row justify-content-center">
+        <div className="row justify-content-center vh-100">
             <div className="col-xl-4 col-lg-6 col-md-8 col-sm-12">
                 <section className="section__registration">
                     <h2 className="mb-3 d-flex justify-content-center align-items-center text-dark">

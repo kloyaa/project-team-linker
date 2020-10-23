@@ -16,7 +16,7 @@
     "autoimport.filesToScan": "**/*.{ts,tsx, css, js, svg, png, jpg}",
     "autoimport.showNotifications": true,
     "path-intellisense.autoSlashAfterDirectory": true,
-    "workbench.colorTheme": "Material Theme",
+    "workbench.colorTheme": "Dracula",
     "javascript.updateImportsOnFileMove.enabled": "always",
     "editor.quickSuggestionsDelay": 1,
     "editor.quickSuggestions": null,

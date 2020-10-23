@@ -21,7 +21,9 @@
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.0",
     "mongoose": "^5.10.7",
-    "request": "^2.88.2"
+    "react-burger-menu": "^2.9.0",
+    "request": "^2.88.2",
+    "uikit": "^3.5.9"
   },
   "devDependencies": {
     "concurrently": "^5.3.0"

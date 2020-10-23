@@ -1,102 +1,78 @@
-import * as actionType from '../types';
+import * as actionType from '../types/types';
+import { IActionType } from '../types/types';
 
-type IActionType = {
-    type: typeof actionType.REGISTER_SUCCESS
-    | typeof actionType.REGISTER_FAILED
-    | typeof actionType.STATUS
-    | typeof actionType.REGISTER_LOADING
-    | typeof actionType.USER_LOADED
-    | typeof actionType.USER_LOADING
-    | typeof actionType.USER_ERROR
-    | typeof actionType.LOGIN_SUCCESS
-    | typeof actionType.LOGIN_FAILED
-    | typeof actionType.LOGOUT
-    | typeof actionType.LOADING
-    | typeof actionType.CLEAR_PROFILE,
-    payload: any,
-    httpStatus?: number
-}
-
+//## Reducer Initial State
 const initialState = {
     token: localStorage.getItem('token'),
     isAuthenticated: null,
     user: null,
-    message: null
+    message: null,
+    loading: null
 }
+//## typeof Reducer
+//## AuthenticationReducer
 const authReducer = (state = initialState, action: IActionType) => {
-    const { type, payload, httpStatus } = action;
-
+    const { type, payload } = action;
     switch (type) {
-        case actionType.LOGIN_SUCCESS:
-            localStorage.setItem('token', payload.token)
+        //## Login is loading
+        case actionType.LOGIN_LOADING:
             return {
                 ...state,
                 ...payload,
-                isAuthenticated: true,
-                loading: false,
-                message: payload.message,
+                loading: true
             }
-        case actionType.LOGIN_FAILED:
-            localStorage.removeItem('token')
-            return {
-                ...state,
-                token: null,
-                user: null,
-                isAuthenticated: false,
-                loading: false,
-                httpStatus: payload.httpStatus,
-                message: payload.message
-            }
-        case actionType.USER_LOADED:
-            return {
-                ...state,
-                isAuthenticated: true,
-                loading: false,
-                user: payload
-            }
-        case actionType.REGISTER_SUCCESS:
+        //## Login success
+        case actionType.LOGIN_SUCCESS:
             localStorage.setItem('token', payload.token);
             return {
                 ...state,
                 ...payload,
                 isAuthenticated: true,
+                message: payload.message,
                 loading: false,
-                httpStatus: null
             }
-        case actionType.REGISTER_FAILED:
-            localStorage.removeItem('token')
+        //## Login failed
+        case actionType.LOGIN_FAILED:
+            if (localStorage.token) localStorage.removeItem('token');
             return {
                 ...state,
                 token: null,
+                user: null,
                 isAuthenticated: false,
-                loading: false
+                httpStatus: payload.httpStatus,
+                message: payload.message,
+                loading: false,
             }
+        //## User is loading
         case actionType.USER_LOADING:
             return {
                 ...state,
+                ...payload,
                 loading: true
             }
-        case actionType.USER_ERROR: {
-            localStorage.removeItem('token')
+        //## User data
+        case actionType.USER_LOADED:
             return {
                 ...state,
+                ...payload,
+                isAuthenticated: true,
+                user: payload,
+                loading: false,
+            }
+        //## User failed
+        case actionType.USER_FAILED: {
+            if (localStorage.token) localStorage.removeItem('token');
+            return {
                 token: null,
                 isAuthenticated: false,
+                message: payload.message,
                 loading: false
             }
         }
-        case actionType.STATUS:
-            return {
-                ...state,
-                message: payload,
-                loading: false,
-                httpStatus
-            }
-
-        case actionType.LOGOUT:
+        //## User logout
+        case actionType.USER_LOGOUT:
             localStorage.removeItem('token')
             return {
-                ...state,
                 token: null,
                 isAuthenticated: false,
                 loading: false,
@@ -104,10 +80,29 @@ const authReducer = (state = initialState, action: IActionType) => {
                 message: null
             }
 
-        case actionType.LOADING:
+        //## Register is loading
+        case actionType.REGISTER_LOADING:
             return {
                 ...state,
-                loading: true
+                ...payload,
+                loading: true,
+            }
+        //## Register is success
+        case actionType.REGISTER_SUCCESS:
+            localStorage.setItem('token', payload.token);
+            return {
+                ...state,
+                ...payload,
+                isAuthenticated: true,
+                loading: false
+            }
+        case actionType.REGISTER_FAILED:
+            if (localStorage.token) localStorage.removeItem('token');
+            return {
+                token: null,
+                isAuthenticated: false,
+                message: payload.message,
+                loading: false
             }
         default:
             return state

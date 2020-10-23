@@ -1,33 +1,22 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Redirect, useHistory } from 'react-router-dom';
-import { ButtonSaveAndContinue } from '../../../components/Button/Button';
+import { ButtonSaveChanges } from '../../../components/Button/Button';
 import { DividerTitleEditProfile, DividerTitleSocial } from '../../../components/Divider/Divider';
 import { InputAlternateEmail, InputEmailDisabled, InputFacebook, InputFirstname, InputGitHub, InputInstagram, InputLastname, InputYouTube } from '../../../components/Form/Form';
-import { AppDispatch, useTypedSelector } from '../../../hooks/hooks';
+import { AppDispatch, useAuthenticationState } from '../../../hooks/hooks';
 import { useDispatch } from 'react-redux'
 import { editProfile } from '../../../redux/profile/profile-action';
+import { Redirect } from 'react-router-dom';
 
 function Profile() {
-    const history = useHistory();
+    const authentication = useAuthenticationState();
     const dispatch: AppDispatch = useDispatch();
-    const authenticationState = useTypedSelector(state => state.authentication);
-
-    const { user, isAuthenticated } = authenticationState;
-    const { errors, register, handleSubmit } = useForm();
     const [proceed, setProceed] = useState({
-        willProceed: false
+        feed: false
     })
 
-    useEffect(() => {
-        console.log('[history]', history)
-        if (!isAuthenticated)
-            history.push('/login');
-
-    }, [isAuthenticated, history,]);
-
-    if (proceed.willProceed)
-        return <Redirect to="/feed/posts" />
+    const { user, isAuthenticated } = authentication;
+    const { errors, register, handleSubmit } = useForm();
 
     const onSave = (data: any) => {
         const { firstName, lastName, gitHub } = data;
@@ -36,10 +25,12 @@ function Profile() {
             lastName,
             gitHub
         }))
-        setProceed({ willProceed: true })
+        setProceed({ feed: true })
     }
 
-
+    if (isAuthenticated && proceed.feed) {
+        return < Redirect to="/feed/posts" />
+    }
     return (
         <Fragment>
             <form onSubmit={handleSubmit(onSave)}>
@@ -59,41 +50,34 @@ function Profile() {
                             message: 'Valid email is required'
                         }
                     })} />
-                <div className="row mt-2">
-                    <div className="col-md-6">
-                        <InputFirstname
-                            errors={errors.firstName}
-                            register={register({
-                                required: {
-                                    value: true,
-                                    message: "First name is required"
-                                },
-                                pattern: {
-                                    value: /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u,
-                                    message: "First name is ugly and so are you, Please try another one."
-                                },
-                                minLength: 3,
-                                maxLength: 30
-                            })} />
-                    </div>
-                    <div className="col-md-6">
-                        <InputLastname
-                            errors={errors.lastName}
-                            register={register({
-                                required: {
-                                    value: true,
-                                    message: "Last name is required"
-                                },
-                                pattern: {
-                                    value: /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u,
-                                    message: "Last name is ugly and so are you, Please try another one."
-                                },
-                                minLength: 3,
-                                maxLength: 30
-                            })} />
-                    </div>
-                </div>
-
+                <InputFirstname
+                    errors={errors.firstName}
+                    register={register({
+                        required: {
+                            value: true,
+                            message: "First name is required"
+                        },
+                        pattern: {
+                            value: /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u,
+                            message: "First name is ugly and so are you, Please try another one."
+                        },
+                        minLength: 3,
+                        maxLength: 30
+                    })} />
+                <InputLastname
+                    errors={errors.lastName}
+                    register={register({
+                        required: {
+                            value: true,
+                            message: "Last name is required"
+                        },
+                        pattern: {
+                            value: /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u,
+                            message: "Last name is ugly and so are you, Please try another one."
+                        },
+                        minLength: 3,
+                        maxLength: 30
+                    })} />
 
                 <DividerTitleSocial />
                 {/* Fields social*/}
@@ -118,7 +102,10 @@ function Profile() {
                 <InputYouTube />
                 <InputInstagram />
                 <InputFacebook />
-                <ButtonSaveAndContinue />
+                <div>
+                    <ButtonSaveChanges />
+                </div>
+
             </form>
         </Fragment>
     )

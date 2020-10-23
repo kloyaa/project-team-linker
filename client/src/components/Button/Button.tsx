@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom'
-import { useTypedSelector } from '../../hooks/hooks';
+import { useAuthenticationState } from '../../hooks/hooks';
+
 type IButtonContinue = {}
 type IButtonSignIn = {
     classes?: string,
@@ -8,7 +9,7 @@ type IButtonSignIn = {
 }
 
 export const ButtonContinue: React.FC<IButtonContinue> = () => {
-    const authentication = useTypedSelector(state => state.authentication);
+    const authentication = useAuthenticationState();
     const { loading } = authentication;
     return (
         <Fragment>
@@ -30,7 +31,7 @@ export const ButtonContinue: React.FC<IButtonContinue> = () => {
 export const ButtonSignIn: React.FC<IButtonSignIn> = ({ classes, textColor }) => {
     return (
         <Fragment>
-            <Link to="/login">
+            <Link to="/auth/login">
                 <div className={`uk-button ${classes ? classes : 'uk-button-default'} mt-2`}>
                     <div className="d-flex align-items-center">
                         <span className={`${textColor ? textColor : 'text-dark'}`}>Sign in</span>
@@ -42,7 +43,7 @@ export const ButtonSignIn: React.FC<IButtonSignIn> = ({ classes, textColor }) =>
     );
 }
 export const ButtonLogIn: React.FC<IButtonSignIn> = ({ classes, textColor }) => {
-    const authentication = useTypedSelector(state => state.authentication);
+    const authentication = useAuthenticationState();
     const { loading } = authentication;
     return (
         <Fragment>
@@ -85,3 +86,16 @@ export const ButtonSaveAndContinue: React.FC<any> = () => {
         </Fragment>
     );
 }
+export const ButtonSaveChanges: React.FC<any> = () => {
+    return (
+        <Fragment>
+            <button className="uk-button uk-button-primary mt-4" type="submit">
+                <div className="d-flex align-items-center">
+                    <span>Save changes</span>
+                    <span uk-icon="icon: check" className="ml-2"></span>
+                </div>
+            </button>
+        </Fragment>
+    );
+}
+

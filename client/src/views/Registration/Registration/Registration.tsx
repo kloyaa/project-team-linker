@@ -3,7 +3,7 @@ import { ButtonContinue, ButtonSignIn } from '../../../components/Button/Button'
 import { ChkBoxAgreement, ChkBoxOPT, InputEmail, InputPassword, InputPasswordConfirm } from '../../../components/Form/Form';
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
-import { AppDispatch, useTypedSelector } from '../../../hooks/hooks';
+import { AppDispatch, useAuthenticationState } from '../../../hooks/hooks';
 import { registerUser } from '../../../redux/authentication/auth-action'
 import { useHistory } from 'react-router-dom'
 
@@ -19,7 +19,7 @@ const Registration: React.FC<IRegistration> = () => {
     const { register, handleSubmit, errors } = useForm();
     const [password, setPasssword] = useState(false)
 
-    const authentication = useTypedSelector(state => state.authentication);
+    const authentication = useAuthenticationState();
     const { message, httpStatus, isAuthenticated } = authentication;
 
     const onContinue = (data: IFieldsData) => {
@@ -38,7 +38,7 @@ const Registration: React.FC<IRegistration> = () => {
 
     useEffect(() => {
         if (isAuthenticated)
-            history.push('/profile/edit');
+            history.push('/timeline/profile/edit');
     }, [isAuthenticated, history]);
 
     return (

@@ -1,44 +1,47 @@
-import * as actionType from './../types'
+import * as actionType from '../types/types';
+import { IActionType } from '../types/types';
 
-type IActionType = {
-    type: typeof actionType.GET_PROFILE 
-    | typeof actionType.LOADING
-    | typeof actionType.PROFILE_ERROR
-    | typeof actionType.CLEAR_PROFILE,
-    payload: any
-}
+//## Reducer Initial State
 const initialState = {
     profile: null,
     profiles: [],
     repos: [],
-    message: null   
+    message: null
 }
-
+//## typeof Reducer
+//## ProfileReducer
 const Profile = (state = initialState, action: IActionType) => {
     const { type, payload } = action;
-
-    switch(type) {
-        case actionType.LOADING: 
+    switch (type) {
+        //## Profile is loading
+        case actionType.PROFILE_LOADING:
             return {
                 ...state,
+                ...payload,
                 loading: true
             }
-        case actionType.GET_PROFILE:
+        //## Profile data
+        case actionType.PROFILE_DATA:
             return {
                 ...state,
                 profile: payload,
                 loading: false
             }
-        case actionType.PROFILE_ERROR:
+        //## Profile failed
+        case actionType.PROFILE_FAILED:
             return {
                 ...state,
-                message: payload,
+                message: payload.message,
                 loading: false
             }
-        case actionType.CLEAR_PROFILE:
+        //## Profile remove in state
+        case actionType.PROFILE_REMOVE:
             return {
                 ...state,
-                profile: null
+                profile: null,
+                profiles: null,
+                repos: null,
+                message: null
             }
         default:
             return state

@@ -1,41 +1,43 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment } from 'react'
 import { ButtonLogIn } from '../../../components/Button/Button';
 import { InputEmail, InputPassword } from '../../../components/Form/Form';
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
-import { AppDispatch, useTypedSelector } from '../../../hooks/hooks';
+import { AppDispatch, IAuthenticationState, useAuthenticationState } from '../../../hooks/hooks';
 import { loginUser } from '../../../redux/authentication/auth-action';
-import { useHistory } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import { Link } from 'react-router-dom'
+import { isAuthenticated } from '../../../helpers/authentication/isAuthenticated';
 
 
-type ILogin = {}
 type IFieldsData = {
     email: string,
     password: string,
-    confirmPassword: string
+    confirmPassword: string,
+    remember: any
 }
 
-const Login: React.FC<ILogin> = () => {
+const Login: React.FC<any> = () => {
     const dispatch: AppDispatch = useDispatch();
-    const history = useHistory();
+    const authentication: IAuthenticationState = useAuthenticationState();
     const { register, handleSubmit, errors } = useForm();
+    const { message, httpStatus } = authentication;
 
-    const authenticationState = useTypedSelector(state => state.authentication)
-    const { message, httpStatus, isAuthenticated } = authenticationState;
-
-    const onSubmit = (data: IFieldsData) => {
-        const { email, password } = data;
+    // 1. Login handler
+    // 2. Save email to localStorage if all is valid
+    const onSubmit = (fieldsInput: IFieldsData) => {
+        const { email, password } = fieldsInput;
         dispatch(loginUser({
             email, password
         }))
         localStorage.setItem('email', email)
     }
 
-    useEffect(() => {
-        if (isAuthenticated)
-            history.push('/feed/posts');
-    }, [isAuthenticated, history]);
+    // 1. If token is present and state is Authenticated
+    // 2. redirect to feed component
+    if (isAuthenticated(authentication) && localStorage.token) {
+        return <Redirect to="/feed" />
+    }
 
     return (
         <Fragment>
@@ -80,7 +82,7 @@ const Login: React.FC<ILogin> = () => {
                 <div className="d-flex justify-content-between mt-3">
                     <div className="text-dark">
                         <span className="mr-1">Dont have an account? <br /></span>
-                        <Link to="/registration" style={{ textDecoration: "none" }}>
+                        <Link to="/auth/registration" style={{ textDecoration: "none" }}>
                             <div className="d-flex align-items-center">
                                 <span className="text-dark b mr-1">Register here </span>
                                 <span className="uk-icon text-dark" uk-icon="icon: lock; ratio: 1"></span>
@@ -89,14 +91,7 @@ const Login: React.FC<ILogin> = () => {
                     </div>
                     <ButtonLogIn classes={'uk-button-primary'} textColor={'text-white'} />
                 </div>
-                <div className="d-flex justify-content-center text-dark mt-5">
-                    <p className="fs-15" style={{ opacity: "0.7" }}>sign in with</p>
-                </div>
-                <div className="d-flex justify-content-center" style={{ marginTop: "-15px" }}>
-                    <span className="uk-icon-button uk-margin-small-right" uk-icon="twitter"></span>
-                    <span className="uk-icon-button uk-margin-small-right" uk-icon="facebook"></span>
-                    <span className="uk-icon-button uk-margin-small-right" uk-icon="google-plus"></span>
-                </div>
+
             </form>
         </Fragment>
     );

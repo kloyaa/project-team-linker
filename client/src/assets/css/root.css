@@ -5,6 +5,10 @@
     --danger: #ff4444;
 }
 
+.bg-fade {
+    background: #ecedf6;
+}
+
 /* width */
 ::-webkit-scrollbar {
     width: 8px;
@@ -45,6 +49,10 @@
 
 .text-dark {
     color: var(--dark) !important;
+}
+
+.text-dark-fade {
+    color: rgba(0, 0, 0, 0.5)
 }
 
 .b {

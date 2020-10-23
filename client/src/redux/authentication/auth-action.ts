@@ -1,104 +1,109 @@
+import * as actionType from '../types/types';
 import axios from 'axios';
-import * as actionType from '../types';
 import setAuthToken from '../../helpers/token/setAuthToken';
+import { IRegister, ILogin } from './types';
+import { IActionType } from '../types/types';
 import { Dispatch } from 'react';
-import { IActionType, ILoginUser, INewUser } from '../ts/action-types';
-import { config } from '../ts/config';
+import { config } from '../../helpers/config/config';
 
+//## typeof asyc Function
+//## Load user data if authenticated
 export const loadUser: any = () => {
     return async (dispatch: Dispatch<IActionType>) => {
-        //If there is any token in localstorage.token
-        if (localStorage.token) {
-            setAuthToken(localStorage.token)
-        }
         try {
-            console.log('[loadUser] is triggered')
-
-
-            /*  # /api/auth 
-                # Requires x-auth-token
-                # x-auth-token = true dispatch loadUserData(), loadUserProfile()
-                # !localstorage.token is empty simply"return" to stop  request execution */
-
-            if (!localStorage.token) return
-            dispatch({ type: actionType.LOADING })
-            const loadUserData = () => axios.get('/api/auth');
-            const loadUserProfile = () => axios.get('/api/profile/me');
-            await Promise.all([loadUserData(), loadUserProfile()])
-                .then(res => {
-                    dispatch({
-                        type: actionType.USER_LOADED,
-                        payload: res[0].data
+            console.log('##[LOAD_USER] is triggered')
+            //## /api/auth 
+            //## Requires x-auth-token
+            //## x-auth-token = true <then> dispatch loadUserData(), loadUserProfile()
+            //## !localstorage.token is empty simply"return" to stop  request execution
+            if (!localStorage.token) return null;
+            if (localStorage.token) {
+                //## If there is any token in localstorage.token
+                setAuthToken(localStorage.token);
+                dispatch({ type: actionType.USER_LOADING });
+                //## Fetch data from api
+                const loadUserData = () => axios.get('/api/auth');
+                const loadUserProfile = () => axios.get('/api/profile/me');
+                await Promise.all([loadUserData(), loadUserProfile()])
+                    .then(res => {
+                        dispatch({
+                            type: actionType.USER_LOADED,
+                            payload: res[0].data
+                        })
+                        dispatch({
+                            type: actionType.PROFILE_DATA,
+                            payload: res[1].data
+                        })
                     })
-                    dispatch({
-                        type: actionType.GET_PROFILE,
-                        payload: res[1].data
+                    .catch((): void => {
+                        dispatch({
+                            type: actionType.USER_FAILED,
+                            payload: {
+                                message: "Failed loading data"
+                            }
+                        })
                     })
-                })
-                .catch(err => {
-                    dispatch({ type: actionType.USER_ERROR })
-                })
-
+            }
         } catch (error) {
             throw new Error("Please try again later")
         }
     }
 }
-export const registerUser: any = ({ name, email, password }: INewUser) => {
+//## typeof asyc Function
+//## Register a new user
+export const registerUser: any = ({ name, email, password }: IRegister) => {
     return async (dispatch: Dispatch<IActionType>) => {
         try {
-            dispatch({ type: actionType.LOADING })
-            console.log('[registerUser]')
-
-            const payload = { name, email, password }
-
-            await axios.post('/api/users', payload, config)
+            console.log('##[REGISTER_USER] is triggered')
+            dispatch({ type: actionType.REGISTER_LOADING });
+            await axios.post('/api/users', { name, email, password }, config)
                 .then(res => {
-                    console.log('REGISTER_SUCCESS')
                     dispatch({
                         type: actionType.REGISTER_SUCCESS,
                         payload: res.data
                     })
-                    dispatch(loadUser())
-
-                    console.log(`[POST_SUCCESS]`, res.data)
+                    if (localStorage.token) dispatch(loadUser());
+                    else return null;
                 })
                 .catch(err => {
+                    dispatch({ type: actionType.REGISTER_FAILED })
                     if (err.response.status === 406) {
-                        dispatch({ type: actionType.REGISTER_FAILED })
                         dispatch({
-                            type: actionType.STATUS,
-                            payload: "Account already registered",
-                            httpStatus: 406
+                            type: actionType.REGISTER_STATUS,
+                            payload: {
+                                message: "Account already registered",
+                                httpStatus: err.response.status
+                            }
                         })
                     }
-
-
                 })
         } catch (error) {
             throw new Error("Registration request failed")
         }
     }
 }
-export const loginUser: any = ({ email, password }: ILoginUser) => {
+
+//## typeof asyc Function
+//## Login user
+export const loginUser: any = ({ email, password }: ILogin) => {
     return async (dispatch: Dispatch<IActionType>) => {
         try {
-            console.log('[loginUser] is triggered')
-            dispatch({ type: actionType.LOADING })
-
-            const payload = { email, password }
-
-            await axios.post('/api/auth/login', payload, config)
+            console.log('##[LOGIN_USER] is triggered')
+            dispatch({ type: actionType.LOGIN_LOADING })
+            await axios.post('/api/auth/login', { email, password }, config)
                 .then(res => {
                     dispatch({
                         type: actionType.LOGIN_SUCCESS,
                         payload: res.data
                     })
                     dispatch({
-                        type: actionType.STATUS,
-                        payload: "Login success"
+                        type: actionType.LOGIN_STATUS,
+                        payload: {
+                            message: "Login success"
+                        }
                     })
-                    dispatch(loadUser())
+                    if (localStorage.token) dispatch(loadUser());
+                    else return null;
                 })
                 .catch(err => {
                     if (err.response.status === 400) {
@@ -110,18 +115,22 @@ export const loginUser: any = ({ email, password }: ILoginUser) => {
                             }
                         })
                     }
-                    dispatch({ type: actionType.CLEAR_PROFILE })
                 })
         } catch (error) {
             throw new Error("Account not found or Invalid credentials")
         }
     }
 }
+//## typeof asyc Function
+//## Logout user
 export const logoutUser: any = () => {
     return (dispatch: Dispatch<IActionType>) => {
-        console.log('[logoutUser] is triggered')
-        dispatch({ type: actionType.LOADING })
-        dispatch({ type: actionType.LOGOUT })
-        dispatch({ type: actionType.CLEAR_PROFILE })
+        console.log('##[LOGOUT_USER] is triggered');
+        if (localStorage.token) {
+            dispatch({ type: actionType.USER_LOGOUT });
+            dispatch({ type: actionType.PROFILE_REMOVE });
+            localStorage.removeItem('token');
+        }
+        return null;
     }
 }
