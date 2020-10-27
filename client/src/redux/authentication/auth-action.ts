@@ -1,60 +1,16 @@
 import * as actionType from '../types/types';
 import axios from 'axios';
-import setAuthToken from '../../helpers/token/setAuthToken';
 import { IRegister, ILogin } from './types';
 import { IActionType } from '../types/types';
 import { Dispatch } from 'react';
 import { config } from '../../helpers/config/config';
 
 //## typeof asyc Function
-//## Load user data if authenticated
-export const loadUser: any = () => {
-    return async (dispatch: Dispatch<IActionType>) => {
-        try {
-            console.log('##[LOAD_USER] is triggered')
-            //## /api/auth 
-            //## Requires x-auth-token
-            //## x-auth-token = true <then> dispatch loadUserData(), loadUserProfile()
-            //## !localstorage.token is empty simply"return" to stop  request execution
-            if (!localStorage.token) return null;
-            if (localStorage.token) {
-                //## If there is any token in localstorage.token
-                setAuthToken(localStorage.token);
-                dispatch({ type: actionType.USER_LOADING });
-                //## Fetch data from api
-                const loadUserData = () => axios.get('/api/auth');
-                const loadUserProfile = () => axios.get('/api/profile/me');
-                await Promise.all([loadUserData(), loadUserProfile()])
-                    .then(res => {
-                        dispatch({
-                            type: actionType.USER_LOADED,
-                            payload: res[0].data
-                        })
-                        dispatch({
-                            type: actionType.PROFILE_DATA,
-                            payload: res[1].data
-                        })
-                    })
-                    .catch((): void => {
-                        dispatch({
-                            type: actionType.USER_FAILED,
-                            payload: {
-                                message: "Failed loading data"
-                            }
-                        })
-                    })
-            }
-        } catch (error) {
-            throw new Error("Please try again later")
-        }
-    }
-}
-//## typeof asyc Function
 //## Register a new user
 export const registerUser: any = ({ name, email, password }: IRegister) => {
     return async (dispatch: Dispatch<IActionType>) => {
         try {
-            console.log('##[REGISTER_USER] is triggered')
+            console.log('##[REGISTER_USER] is triggered');
             dispatch({ type: actionType.REGISTER_LOADING });
             await axios.post('/api/users', { name, email, password }, config)
                 .then(res => {
@@ -62,11 +18,14 @@ export const registerUser: any = ({ name, email, password }: IRegister) => {
                         type: actionType.REGISTER_SUCCESS,
                         payload: res.data
                     })
-                    if (localStorage.token) dispatch(loadUser());
-                    else return null;
                 })
                 .catch(err => {
-                    dispatch({ type: actionType.REGISTER_FAILED })
+                    dispatch({
+                        type: actionType.REGISTER_FAILED,
+                        payload: {
+                            message: "Registration failed"
+                        }
+                    });
                     if (err.response.status === 406) {
                         dispatch({
                             type: actionType.REGISTER_STATUS,
@@ -78,7 +37,7 @@ export const registerUser: any = ({ name, email, password }: IRegister) => {
                     }
                 })
         } catch (error) {
-            throw new Error("Registration request failed")
+            //throw new Error("Registration request failed")
         }
     }
 }
@@ -102,8 +61,6 @@ export const loginUser: any = ({ email, password }: ILogin) => {
                             message: "Login success"
                         }
                     })
-                    if (localStorage.token) dispatch(loadUser());
-                    else return null;
                 })
                 .catch(err => {
                     if (err.response.status === 400) {

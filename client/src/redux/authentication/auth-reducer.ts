@@ -99,10 +99,18 @@ const authReducer = (state = initialState, action: IActionType) => {
         case actionType.REGISTER_FAILED:
             if (localStorage.token) localStorage.removeItem('token');
             return {
+                ...state,
                 token: null,
                 isAuthenticated: false,
                 message: payload.message,
                 loading: false
+            }
+        case actionType.REGISTER_STATUS:
+            if (localStorage.token) localStorage.removeItem('token');
+            return {
+                ...state,
+                httpStatus: payload.httpStatus,
+                message: payload.message
             }
         default:
             return state

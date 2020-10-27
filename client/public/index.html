@@ -2,14 +2,11 @@
 <html lang="en">
   <head>
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <!-- Meta  -->
-    <!--<meta http-equiv="refresh" content=5; url="https://example.com"> -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta title="Open-source collaboration"/>
+    <meta name="description" content="Innovations starts with the connection between yourselves and around the world" />
     <meta name="theme-color" content="#000000" />
-    <meta title="Developer-Alliance will help you to find a team for your Open-source projects around the world"/>
-    <meta name="description" content="Developer-Allience is here to help you to find your Project team/contributors." />
-    <!-- Style -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
@@ -17,26 +14,33 @@
     <link rel="stylesheet" href="%PUBLIC_URL%/src/css/uikit.min.css"> 
     <link rel="stylesheet" href="%PUBLIC_URL%/src/css/css/all.min.css">  
     <!-- Title -->
-    <title>Deviance - Connect and Collaborate</title>
+    <title>Deviance - Start building your ideas</title>
+    <style>
+      html,*, *::before,  *::after {
+        box-sizing: border-box;
+        scroll-behavior: smooth;
+      }
+      body { 
+        overflow-x: hidden;
+        margin: 0;
+        padding: 0;
+      }
+      ::-webkit-scrollbar {  width: 8px;  }
+      ::-webkit-scrollbar-track { background: #fff; }
+      ::-webkit-scrollbar-thumb {  background: var(--night); }
+      ::-webkit-scrollbar-thumb:hover { background: var(--night-dark); }
+    </style>
   </head>
-
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-
-
     <div id="root"></div>
     <div id="modalPostPortal"></div>
-
     <div id="portalSetProfile"></div>
     <div id="portalSpinner"></div>
-    <!-- 
-      Developed by: Madridano, Kolya Nikolai M. 
-      Facebook: Kolya Madridano
-    -->
     <script src="%PUBLIC_URL%/src/js/jquery.min.js"></script>
     <script src="%PUBLIC_URL%/src/js/bootstrap.min.js"></script>
     <script src="%PUBLIC_URL%/src/js/uikit.min.js"></script>
     <script src="%PUBLIC_URL%/src/js/uikit-icons.min.js"></script>
- 
   </body>
+  <!--  Developed by: Madridano, Kolya Nikolai M. Facebook: Kolya Madridano  -->
 </html>

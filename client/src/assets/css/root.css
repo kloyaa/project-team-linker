@@ -1,136 +1,26 @@
 :root {
-    --dark: #4f6467;
+    --default: #2BBBAD;
+    --default-dark: #00695c;
+    --success: #00C851;
+    --success-dark: #007E33;
+    --danger: #ff4444;
+    --danger-dark: #CC0000;
+    --warning: #ffbb33;
+    --warning-dark: #FF8800;
+    --primary: #4285F4;
+    --primary-dark: #0d47a1;
+    --info: #33b5e5;
+    --info-dark: #0099CC;
+    --secondary: #aa66cc;
+    --secondary-dark: #9933CC;
+    --night: #37474F;
+    --night-dark: #263238;
     --white: #fff;
     --white-fade-1: #eaeaea;
-    --danger: #ff4444;
-}
-
-.bg-fade {
-    background: #ecedf6;
-}
-
-/* width */
-::-webkit-scrollbar {
-    width: 8px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-    background: #fff;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-    background: var(--dark);
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-    background: #555;
-}
-
-.danger {
-    background: var(--danger) !important;
-}
-
-.dark {
-    background: var(--dark) !important;
-    color: #fff !important;
-}
-
-.white-f-1 {
-    background: var(--white-fade-1) !important;
-    color: #111 !important;
-}
-
-.text-white {
-    color: var(--white) !important;
-}
-
-.text-dark {
-    color: var(--dark) !important;
-}
-
-.text-dark-fade {
-    color: rgba(0, 0, 0, 0.5)
-}
-
-.b {
-    font-weight: bold;
-}
-
-.fw-500 {
-    font-weight: 500;
-}
-
-.fw-400 {
-    font-weight: 400;
-}
-
-.opc-5 {
-    opacity: 0.5;
-}
-
-.opc-6 {
-    opacity: 0.6;
-}
-
-.opc-7 {
-    opacity: 0.7;
-}
-
-.opc-8 {
-    opacity: 0.8;
-}
-
-.opc-9 {
-    opacity: 0.9;
-}
-
-.fs-9 {
-    font-size: 9px;
-}
-
-.fs-10 {
-    font-size: 10px;
-}
-
-.fs-11 {
-    font-size: 11px;
-}
-
-.fs-12 {
-    font-size: 12px;
-}
-
-.fs-13 {
-    font-size: 13px;
-}
-
-.fs-14 {
-    font-size: 14px;
-}
-
-.fs-15 {
-    font-size: 15px;
-}
-
-.fs-16 {
-    font-size: 16px;
-}
-
-.fs-17 {
-    font-size: 17px;
-}
-
-.fs-18 {
-    font-size: 18px;
-}
-
-.fs-19 {
-    font-size: 19px;
-}
-
-.fs-20 {
-    font-size: 20px;
+    --muted: #d0d6e2;
+    --breakpoint-xs: 0;
+    --breakpoint-sm: 576px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
 }

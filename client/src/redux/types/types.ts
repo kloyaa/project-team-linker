@@ -27,6 +27,11 @@ export const PROFILE_LOADING = "PROFILE_LOADING"
 export const PROFILE_REMOVE = "PROFILE_REMOVE"
 
 
+//Events
+export const TOGGLE_SIDEBAR = "TOGGLE_SIDEBAR"
+export const TOGGLE_SIDEBAR_TOP = "TOGGLE_SIDEBAR_TOP"
+
+
 //@Typeof ActionType
 export type IActionType = {
     type:
@@ -52,7 +57,11 @@ export type IActionType = {
     typeof PROFILE_DATA |
     typeof PROFILE_FAILED |
     typeof PROFILE_LOADING |
-    typeof PROFILE_REMOVE,
+    typeof PROFILE_REMOVE |
+
+    //@Events
+    typeof TOGGLE_SIDEBAR |
+    typeof TOGGLE_SIDEBAR_TOP,
 
 
     payload?: any,

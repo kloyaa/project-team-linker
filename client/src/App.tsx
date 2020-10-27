@@ -1,50 +1,54 @@
-import React, { Fragment, lazy, Suspense, useEffect } from "react";
-import { Switch, Route, useHistory } from 'react-router-dom'
+import React, { Fragment, lazy, Suspense, FC, useEffect } from "react";
+import { Switch, Route, useLocation } from 'react-router-dom'
 import { store } from "./redux";
-import { loadUser } from "./redux/authentication/auth-action";
-import { useAuthenticationState } from "./hooks/hooks";
+import { loadUser } from "./redux/loaduser/load-action";
+import { NavbarBottom } from "./components/NavbarBottom/NavbarBottom";
+import SideBar from "./components/Sidebar/Sidebar";
 import setAuthToken from "./helpers/token/setAuthToken";
 import Navbar from "./components/Navbar/Navbar";
 import SpinnerLarge from "./components/Spinner/Spinner";
 
 const RegisitrationPage = lazy(() => import('./views/Registration/Registration'));
 const LoginPage = lazy(() => import('./views/Login/Login'));
-const PostPage = lazy(() => import('./views/Content/Posts/Posts'));
+const FeedPage = lazy(() => import('./views/Content/Feed/Feed'));
 const EditProfilePage = lazy(() => import('./views/EditProfile/Profile'));
+const HomePage = lazy(() => import('./views/Home/Home'));
+const SettingsPage = lazy(() => import('./views/Settings/Settings'));
 
-// 1. If localstorage.token is exist or active
-// 2. forward token to setAuthToken
-// 3. Load user if authenticated
-if (localStorage.token) {
-  setAuthToken(localStorage.token);
-  store.dispatch(loadUser());
-}
-const App: React.FC<any> = () => {
-  const authentication = useAuthenticationState();
-  const history = useHistory();
-
+const App: FC<any> = () => {
+  const location = useLocation();
+  // 1. If localstorage.token is exist or active
+  // 2. forward token to setAuthToken
+  // 3. Load user if authenticated
   useEffect(() => {
-    // 1. if not authenticated and not localstorage.token 
-    // 2. return to login component
-    if (!authentication.isAuthenticated && !localStorage.token)
-      history.push('/auth/login');
-  }, [authentication.isAuthenticated, history]);
-
+    if (localStorage.token) {
+      setAuthToken(localStorage.token);
+      store.dispatch(loadUser());
+    }
+  }, [location.pathname]);
   return <Fragment>
-    <Navbar />
-    {/* Routes starts here */}
-    <div className="container-fluid">
-      <Suspense fallback={<SpinnerLarge />}>
-        <Switch>
-          <Route exact path="/" component={LoginPage} />
-          <Route path="/feed" component={PostPage} />
-          <Route path="/auth/registration" component={RegisitrationPage} />
-          <Route path="/auth/login" component={LoginPage} />
-          <Route path="/timeline/profile/edit" component={EditProfilePage} />
-          <Route path="/timeline/:id" component={EditProfilePage} />
-        </Switch>
-      </Suspense>
-    </div>
+    {/* Sidebar @sm-md-lg*/}
+    <SideBar>
+      {/* Navbar top @sm-md-lg*/}
+      <Navbar />
+
+      {/* Routes starts here */}
+      <div className="container-fluid">
+        <Suspense fallback={<SpinnerLarge />}>
+          <Switch>
+            <Route exact path="/" component={HomePage} />
+            <Route path="/feed" component={FeedPage} />
+            <Route path="/settings" component={SettingsPage} />
+            <Route path="/auth/registration" component={RegisitrationPage} />
+            <Route path="/auth/login" component={LoginPage} />
+            <Route path="/timeline/profile/edit" component={EditProfilePage} />
+            <Route path="/timeline/:id" component={EditProfilePage} />
+          </Switch>
+        </Suspense>
+      </div>
+    </SideBar>
+    {/* Navbar bottom @xs only*/}
+    <NavbarBottom />
   </Fragment >
 }
 export default App;

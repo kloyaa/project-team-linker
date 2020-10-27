@@ -1,0 +1,7 @@
+.Settings {
+    position: absolute;
+    height: 500px;
+    background: var(--primary);
+    width: 100%;
+    z-index: 222;
+}

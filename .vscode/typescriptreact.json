@@ -1,0 +1,49 @@
+{
+	"Typescript React PureComponent": {
+		"prefix": "tsfce",
+		"body": [
+			"import React, { FC, Fragment } from 'react'",
+			"",
+			"type I${1:type} = {}",
+			"export const $2: FC<I${1:type}> = () => {",
+			"\treturn <Fragment>",
+			"",
+			"\t</Fragment>",
+			"}"
+		],
+		"description": "Typescript React PureComponent"
+	},
+	"Typescript React Export Default PureComponent": {
+		"prefix": "tsfc",
+		"body": [
+			"import React, { FC, Fragment } from 'react'",
+			"",
+			"type I${1:type} = {}",
+			"const ${2:name}: FC<I${1:type}> = () => {",
+			"\treturn <Fragment>",
+			"",
+			"\t</Fragment>",
+			"}",
+			"export default ${2:name}"
+		],
+		"description": "Typescript React PureComponent"
+	},
+	"Arrow function Typescript": {
+		"prefix": "fn",
+		"body": [
+			"const ${1:name} = ():${2:returnType} => {",
+			"\t return",
+			"}"
+		],
+		"description": "Arrow function Typescript"
+	},
+	"Arrow function Typescript Export": {
+		"prefix": "efn",
+		"body": [
+			"export const ${1:name} = ():${2:returnType} => {",
+			"\t return",
+			"}"
+		],
+		"description": "Arrow function Typescript Export"
+	}
+}

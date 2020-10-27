@@ -18,6 +18,7 @@ const Registration: React.FC<IRegistration> = () => {
     const dispatch: AppDispatch = useDispatch();
     const { register, handleSubmit, errors } = useForm();
     const [password, setPasssword] = useState(false)
+    const [email, setEmail] = useState({ value: "" })
 
     const authentication = useAuthenticationState();
     const { message, httpStatus, isAuthenticated } = authentication;
@@ -28,17 +29,19 @@ const Registration: React.FC<IRegistration> = () => {
         if (!isEqual(password, confirmPassword)) {
             setPasssword(true);
         } else if (isEqual(password, confirmPassword)) {
-            localStorage.setItem("email", email);
             dispatch(registerUser({
                 email,
                 password
             }))
+            setEmail({ value: email })
         }
     }
 
     useEffect(() => {
-        if (isAuthenticated)
+        if (isAuthenticated) {
+            localStorage.setItem("email", email.value);
             history.push('/timeline/profile/edit');
+        }
     }, [isAuthenticated, history]);
 
     return (
@@ -109,16 +112,6 @@ const Registration: React.FC<IRegistration> = () => {
                     <ButtonContinue />
                 </div>
             </form>
-
-            <div className="d-flex justify-content-center text-dark mt-5">
-                <p className="fs-15" style={{ opacity: "0.7" }}>sign up with</p>
-            </div>
-
-            <div className="d-flex justify-content-center" style={{ marginTop: "-15px" }}>
-                <span className="uk-icon-button uk-margin-small-right" uk-icon="twitter"></span>
-                <span className="uk-icon-button uk-margin-small-right" uk-icon="facebook"></span>
-                <span className="uk-icon-button uk-margin-small-right" uk-icon="google-plus"></span>
-            </div>
         </Fragment>
     );
 }

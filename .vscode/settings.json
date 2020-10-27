@@ -19,7 +19,7 @@
     "workbench.colorTheme": "Dracula",
     "javascript.updateImportsOnFileMove.enabled": "always",
     "editor.quickSuggestionsDelay": 1,
-    "editor.quickSuggestions": null,
+    "editor.quickSuggestions": true,
     "kite.showWelcomeNotificationOnStartup": false,
     "files.associations": {
         "*.tsx": "typescriptreact",

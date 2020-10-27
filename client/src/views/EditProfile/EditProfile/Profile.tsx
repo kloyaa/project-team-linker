@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment } from 'react'
 import { useForm } from 'react-hook-form'
 import { ButtonSaveChanges } from '../../../components/Button/Button';
 import { DividerTitleEditProfile, DividerTitleSocial } from '../../../components/Divider/Divider';
@@ -6,16 +6,16 @@ import { InputAlternateEmail, InputEmailDisabled, InputFacebook, InputFirstname,
 import { AppDispatch, useAuthenticationState } from '../../../hooks/hooks';
 import { useDispatch } from 'react-redux'
 import { editProfile } from '../../../redux/profile/profile-action';
-import { Redirect } from 'react-router-dom';
+//import { Redirect } from 'react-router-dom';
 
 function Profile() {
     const authentication = useAuthenticationState();
     const dispatch: AppDispatch = useDispatch();
-    const [proceed, setProceed] = useState({
-        feed: false
-    })
+    // const [proceed, setProceed] = useState({
+    //     feed: false
+    // })
 
-    const { user, isAuthenticated } = authentication;
+    const { user } = authentication;
     const { errors, register, handleSubmit } = useForm();
 
     const onSave = (data: any) => {
@@ -25,12 +25,12 @@ function Profile() {
             lastName,
             gitHub
         }))
-        setProceed({ feed: true })
+        //setProceed({ feed: true })
     }
 
-    if (isAuthenticated && proceed.feed) {
-        return < Redirect to="/feed/posts" />
-    }
+    // if (isAuthenticated && proceed.feed) {
+    //     return < Redirect to="/feed/posts" />
+    // }
     return (
         <Fragment>
             <form onSubmit={handleSubmit(onSave)}>

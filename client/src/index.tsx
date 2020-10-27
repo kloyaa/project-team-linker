@@ -6,6 +6,8 @@ import { Provider } from 'react-redux';
 import { store } from './redux/index';
 import './assets/css/root.css'
 import './assets/css/index.css'
+import './assets/css/app.css'
+
 import * as serviceWorker from "./serviceWorker";
 //store.subscribe(() => console.log(store.getState()));
 
@@ -24,3 +26,5 @@ ReactDOM.render(
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
+
+

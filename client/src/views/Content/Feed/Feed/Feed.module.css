@@ -1,0 +1,58 @@
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .avatar {
+        height: 30px !important;
+        width: 30px !important;
+    }
+
+    .name {
+        font-size: 13px;
+        padding: 0;
+        margin: 0;
+        margin-left: 5px;
+    }
+
+    .datePosted {
+        font-size: 11px;
+        padding: 0;
+        margin: 0;
+    }
+
+    .datePostedIcon {
+        font-size: 11px;
+        margin-left: 5px;
+        margin-right: 3px;
+        color: var(--dark);
+
+    }
+
+    .title {
+        font-size: 15px;
+        font-weight: bolder;
+        padding: 0;
+        margin: 0;
+        color: var(--dark);
+
+    }
+
+    .description {
+        font-size: 13px;
+        color: var(--dark);
+    }
+
+    .tags {
+        font-size: 12px;
+        color: var(--dark);
+        padding: 0;
+        margin: 0;
+    }
+
+    .tags div {
+        margin-right: 3px;
+    }
+
+
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {}

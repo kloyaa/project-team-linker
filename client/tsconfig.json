@@ -19,7 +19,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx":"react",
-
+    "noFallthroughCasesInSwitch": true,
     "declaration": true,
     "noUnusedLocals": true,
     "allowUnreachableCode": true
